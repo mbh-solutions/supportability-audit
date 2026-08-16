@@ -33,7 +33,7 @@ jobs:
         run: skills-ref validate "$GITHUB_WORKSPACE"
 
       - name: Validate repository contract
-        run: python tests/validate_repository.py
+        run: python src/supportability_audit/validate_repository.py
 
       - name: Test repository contract failures
         run: python -m unittest discover -s tests -p "test_*.py"

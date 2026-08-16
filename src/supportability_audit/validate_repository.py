@@ -7,7 +7,7 @@ from pathlib import Path
 from urllib.parse import unquote
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 STANDARD = ROOT / "references" / "supportability-standard.md"
 EXPECTED_STANDARD_SHA256 = (
     "81653c5057c1555f8b6d41c6e5999d0b54caa178a2ca97a07216147ec16133e2"
@@ -23,13 +23,17 @@ EXPECTED_DESCRIPTION = (
 REQUIRED_FILES = {
     ".gitattributes",
     ".github/workflows/validate.yml",
+    ".supportability-characterization.json",
+    ".supportability-review.toml",
+    ".supportability.toml",
     "README.md",
     "SKILL.md",
     "assets/findings-report.md",
     "references/audit-rubric.md",
     "references/supportability-standard.md",
+    "src/supportability_audit/__init__.py",
+    "src/supportability_audit/validate_repository.py",
     "tests/test_validate_repository.py",
-    "tests/validate_repository.py",
 }
 RUNTIME_FILES = {
     "SKILL.md",

@@ -19,6 +19,6 @@ The skill never installs dependencies, executes target code, changes audited fil
 
 Validation uses the official `skills-ref` reference validator pinned to [`69ef37e9424c0a7ea9dd2293b559e43ec8176379`](https://github.com/agentskills/agentskills/commit/69ef37e9424c0a7ea9dd2293b559e43ec8176379), the standard-library repository validator, bytecode compilation, whitespace checks, and a final Standard hash check. The workflow pins every external action and validator revision to a full commit SHA.
 
-Local validation requires Python 3.12. Install the pinned validator directly from its source repository, run `skills-ref validate` with the absolute repository path, then run the commands documented in `.github/workflows/validate.yml` and verify the final hash against the value above.
+Local validation requires Python 3.12. Install the pinned validator directly from its source repository, run `skills-ref validate` with the absolute repository path, then run the commands documented in `.github/workflows/validate.yml` and verify the final hash against the value above. The repository contract validator is `src/supportability_audit/validate_repository.py`.
 
 The absolute path works around an upstream reference-validator defect in which the otherwise equivalent argument `.` has an empty path name and is rejected. No validator behavior is patched or replaced.

@@ -163,18 +163,16 @@ class RepositoryValidationTests(unittest.TestCase):
         )
 
     def test_rejects_extra_standard_status(self) -> None:
-        skill = self.repository / "SKILL.md"
-        skill.write_text(
-            skill.read_text(encoding="utf-8").replace(
-                "| `NOT APPLICABLE` | The clause's stated condition does not apply; "
-                "a specific reason is recorded. |",
-                "| `NOT APPLICABLE` | The clause's stated condition does not apply; "
-                "a specific reason is recorded. |\n   | `UNKNOWN` | Unsupported fifth status. |",
+        report = self.repository / "assets" / "findings-report.md"
+        report.write_text(
+            report.read_text(encoding="utf-8").replace(
+                "| `NOT APPLICABLE` | `<count>` |",
+                "| `NOT APPLICABLE` | `<count>` |\n   | `UNKNOWN` | `<count>` |",
                 1,
             ),
             encoding="utf-8",
         )
-        self.assert_rejected("status table in SKILL.md must contain exactly")
+        self.assert_rejected("status table in assets/findings-report.md must contain exactly")
 
     def test_rejects_invalid_frontmatter(self) -> None:
         skill = self.repository / "SKILL.md"

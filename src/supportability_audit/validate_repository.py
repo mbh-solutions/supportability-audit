@@ -340,12 +340,13 @@ def validate_report_contract(errors: list[str]) -> None:
         for item in required_text:
             if item not in text:
                 errors.append(f"missing report contract in {relative}: {item}")
-        if relative in {"SKILL.md", "references/audit-rubric.md"}:
-            validate_status_table(errors, relative, text)
+        validate_status_table(errors, relative, text)
 
 
 def validate_status_table(errors: list[str], relative: str, text: str) -> None:
-    header = "| Status | Required meaning |"
+    report_template = relative == "assets/findings-report.md"
+    header = "| Status | Count |" if report_template else "| Status | Required meaning |"
+    expected = (*STANDARD_STATUSES, "**Total**") if report_template else STANDARD_STATUSES
     if header not in text:
         return
     lines = text[text.index(header) :].splitlines()
@@ -355,7 +356,7 @@ def validate_status_table(errors: list[str], relative: str, text: str) -> None:
         if len(line) - len(row) > 3 or not row.startswith("|"):
             break
         statuses.append(row.split("|", 2)[1].strip().strip("`"))
-    if tuple(statuses) != STANDARD_STATUSES:
+    if tuple(statuses) != expected:
         errors.append(
             f"status table in {relative} must contain exactly: {', '.join(STANDARD_STATUSES)}"
         )

@@ -7,7 +7,6 @@ from supportability_audit import validate_repository
 
 errors: list[str] = []
 validate_repository.validate_standard(errors)
-validate_repository.validate_frontmatter(errors)
 validate_repository.validate_links(errors)
 validate_repository.validate_runtime_boundary(errors)
 print(

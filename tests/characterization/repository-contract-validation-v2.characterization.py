@@ -18,14 +18,10 @@ def validate_case(mutate: Callable[[Path], None]) -> list[str]:
             shutil.copytree(
                 original_root,
                 repository,
-                ignore=shutil.ignore_patterns(
-                    ".git", ".ruff_cache", "__pycache__", "*.pyc"
-                ),
+                ignore=shutil.ignore_patterns(".git", ".ruff_cache", "__pycache__", "*.pyc"),
             )
             validate_repository.ROOT = repository
-            validate_repository.STANDARD = (
-                repository / "references" / "supportability-standard.md"
-            )
+            validate_repository.STANDARD = repository / "references" / "supportability-standard.md"
             mutate(repository)
             errors: list[str] = []
             validate_repository.validate_files(errors)

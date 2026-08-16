@@ -1,11 +1,16 @@
 from __future__ import annotations
 
+import importlib
 import shutil
 import subprocess
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+validate_repository = importlib.import_module("supportability_audit.validate_repository")
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -14,9 +19,7 @@ class RepositoryValidationTests(unittest.TestCase):
     def setUp(self) -> None:
         self.temporary_directory = tempfile.TemporaryDirectory()
         self.repository = Path(self.temporary_directory.name) / "supportability-audit"
-        shutil.copytree(
-            ROOT, self.repository, ignore=shutil.ignore_patterns(".git", "__pycache__")
-        )
+        shutil.copytree(ROOT, self.repository, ignore=shutil.ignore_patterns(".git", "__pycache__"))
 
     def tearDown(self) -> None:
         self.temporary_directory.cleanup()
@@ -73,6 +76,11 @@ class RepositoryValidationTests(unittest.TestCase):
     def test_rejects_unexpected_characterization_file(self) -> None:
         orphan = self.repository / "tests" / "characterization" / "orphan.golden.json"
         orphan.write_text("{}\n", encoding="utf-8")
+        with mock.patch.object(validate_repository, "ROOT", self.repository):
+            self.assertIn(
+                "tests/characterization/orphan.golden.json",
+                validate_repository.repository_files(),
+            )
         self.assert_rejected(
             "unexpected file or runtime surface: tests/characterization/orphan.golden.json"
         )

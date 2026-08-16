@@ -167,12 +167,14 @@ class RepositoryValidationTests(unittest.TestCase):
         report.write_text(
             report.read_text(encoding="utf-8").replace(
                 "| `NOT APPLICABLE` | `<count>` |",
-                "| `NOT APPLICABLE` | `<count>` |\n   | `UNKNOWN` | `<count>` |",
+                "| `NOT APPLICABLE` | `<count>` |\n`UNKNOWN` | `<count>`",
                 1,
             ),
             encoding="utf-8",
         )
-        self.assert_rejected("status table in assets/findings-report.md must contain exactly")
+        self.assert_rejected(
+            "runtime contract in assets/findings-report.md differs from canonical content"
+        )
 
     def test_rejects_invalid_frontmatter(self) -> None:
         skill = self.repository / "SKILL.md"

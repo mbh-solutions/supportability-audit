@@ -63,7 +63,15 @@ CLAUSE_FIELDS = (
     "blocking_test",
 )
 APPLICABILITY_FIELDS = ("profiles", "condition")
-STANDARD_STATUSES = ("PASS", "FAIL", "INCOMPLETE", "NOT APPLICABLE")
+RUNTIME_CONTRACT_SHA256 = {
+    "SKILL.md": "94bf156b36fb374cc6a079268d3c29f4d2009b939493e9e60b118f315407064f",
+    "references/audit-rubric.md": (
+        "1904449cdc9d8b0099c47a780c3048a564f27cd2f6e4fe4c6d04af080f6082bd"
+    ),
+    "assets/findings-report.md": (
+        "7523f6a7a6ce470711fd1eb0b4709fb90952c0a7658a170ab41700eb67bb7bf8"
+    ),
+}
 FAIL_CLOSED_BOTTOM_LINE = (
     "Use bottom line `Corrections required` whenever any applicable clause is `FAIL` or "
     "`INCOMPLETE`. Otherwise use `No supported non-passing items found in audited scope`."
@@ -340,26 +348,13 @@ def validate_report_contract(errors: list[str]) -> None:
         for item in required_text:
             if item not in text:
                 errors.append(f"missing report contract in {relative}: {item}")
-        validate_status_table(errors, relative, text)
+        validate_runtime_contract(errors, relative, text)
 
 
-def validate_status_table(errors: list[str], relative: str, text: str) -> None:
-    report_template = relative == "assets/findings-report.md"
-    header = "| Status | Count |" if report_template else "| Status | Required meaning |"
-    expected = (*STANDARD_STATUSES, "**Total**") if report_template else STANDARD_STATUSES
-    if header not in text:
-        return
-    lines = text[text.index(header) :].splitlines()
-    statuses: list[str] = []
-    for line in lines[2:]:
-        row = line.lstrip(" ")
-        if len(line) - len(row) > 3 or not row.startswith("|"):
-            break
-        statuses.append(row.split("|", 2)[1].strip().strip("`"))
-    if tuple(statuses) != expected:
-        errors.append(
-            f"status table in {relative} must contain exactly: {', '.join(STANDARD_STATUSES)}"
-        )
+def validate_runtime_contract(errors: list[str], relative: str, text: str) -> None:
+    digest = hashlib.sha256(text.encode()).hexdigest()
+    if digest != RUNTIME_CONTRACT_SHA256[relative]:
+        errors.append(f"runtime contract in {relative} differs from canonical content")
 
 
 def validate_frontmatter_values(errors: list[str], fields: list[tuple[str, str]]) -> None:

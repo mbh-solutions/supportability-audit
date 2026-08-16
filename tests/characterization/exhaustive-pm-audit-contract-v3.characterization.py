@@ -218,12 +218,19 @@ legacy_expected = {
     ],
     "rejects_missing_required_file": ["missing required file: README.md"],
 }
+if EXPANDED:
+    runtime_contract_error = "runtime contract in SKILL.md differs from canonical content"
+    legacy_expected["rejects_altered_frontmatter"].append(runtime_contract_error)
+    legacy_expected["rejects_forbidden_runtime_text"].insert(0, runtime_contract_error)
 if legacy_cases != legacy_expected:
     raise RuntimeError(
         json.dumps({"actual": legacy_cases, "expected": legacy_expected}, sort_keys=True)
     )
 
 if EXPANDED:
+    report_runtime_contract_error = (
+        "runtime contract in assets/findings-report.md differs from canonical content"
+    )
     expanded_cases = {
         "rejects_altered_inventory": validate_case(alter_inventory),
         "rejects_duplicate_clause": validate_case(duplicate_clause),
@@ -249,9 +256,7 @@ if EXPANDED:
             "d22d407901dcfb9492a07666457ce412f40efc5bc04985abf22e60cb9ee4a5cf",
             "inventory clause IDs must be unique: 217 unique of 218",
         ],
-        "rejects_extra_standard_status": [
-            "status table in SKILL.md must contain exactly: PASS, FAIL, INCOMPLETE, NOT APPLICABLE"
-        ],
+        "rejects_extra_standard_status": [runtime_contract_error],
         "rejects_invalid_clause_schema": [
             "canonical inventory SHA-256 mismatch: expected "
             "02f58effce7bb27bf57536585d42b6d0241929ba29377fdbded4d93ecfe3eb9a, got "
@@ -262,7 +267,8 @@ if EXPANDED:
         "rejects_missing_checklist_column": [
             "missing report contract in assets/findings-report.md: | Standard section | "
             "Clause ID | Standard line | Requirement | Applicability reason | Evidence | "
-            "Status | Finding IDs |"
+            "Status | Finding IDs |",
+            report_runtime_contract_error,
         ],
         "rejects_missing_clause": [
             "canonical inventory SHA-256 mismatch: expected "
@@ -271,7 +277,8 @@ if EXPANDED:
             "inventory must contain 218 clauses: got 217",
         ],
         "rejects_missing_fail_closed_predicate": [
-            "missing report contract in SKILL.md: " + validate_repository.FAIL_CLOSED_BOTTOM_LINE
+            "missing report contract in SKILL.md: " + validate_repository.FAIL_CLOSED_BOTTOM_LINE,
+            runtime_contract_error,
         ],
         "rejects_missing_inventory": [
             "missing required file: references/normative_clause_inventory.json",
@@ -279,10 +286,12 @@ if EXPANDED:
             "broken relative link: references/audit-rubric.md -> normative_clause_inventory.json",
         ],
         "rejects_missing_pm_summary_field": [
-            "missing report contract in assets/findings-report.md: - Highest-priority correction:"
+            "missing report contract in assets/findings-report.md: - Highest-priority correction:",
+            report_runtime_contract_error,
         ],
         "rejects_missing_report_contract": [
-            "missing report contract in assets/findings-report.md: # Product-manager summary"
+            "missing report contract in assets/findings-report.md: # Product-manager summary",
+            report_runtime_contract_error,
         ],
         "rejects_wrong_standard_binding": [
             "canonical inventory SHA-256 mismatch: expected "

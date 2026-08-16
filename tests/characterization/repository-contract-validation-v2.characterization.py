@@ -1,29 +1,21 @@
 from __future__ import annotations
 
 import json
-import os
-import subprocess
-import sys
-from pathlib import Path
+
+from supportability_audit import validate_repository
 
 
-target = Path(os.environ["SUPPORTABILITY_CHARACTERIZATION_TARGET"])
-completed = subprocess.run(
-    [sys.executable, "-P", "src/supportability_audit/validate_repository.py"],
-    cwd=target,
-    capture_output=True,
-    text=True,
-    check=False,
-)
+errors: list[str] = []
+validate_repository.validate_standard(errors)
+validate_repository.validate_frontmatter(errors)
+validate_repository.validate_links(errors)
+validate_repository.validate_runtime_boundary(errors)
 print(
     json.dumps(
         {
             "schema_version": "1.0",
             "scenario": "repository-contract-validation-v2",
-            "behavior": {
-                "exit_code": completed.returncode,
-                "stdout": completed.stdout,
-            },
+            "behavior": {"errors": errors},
         },
         sort_keys=True,
     )

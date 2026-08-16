@@ -1,4 +1,3 @@
 {
-  "exit_code": 0,
-  "stdout": "Repository validation passed.\n"
+  "errors": []
 }

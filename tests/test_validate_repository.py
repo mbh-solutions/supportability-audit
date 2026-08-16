@@ -169,7 +169,7 @@ class RepositoryValidationTests(unittest.TestCase):
                 "| `NOT APPLICABLE` | The clause's stated condition does not apply; "
                 "a specific reason is recorded. |",
                 "| `NOT APPLICABLE` | The clause's stated condition does not apply; "
-                "a specific reason is recorded. |\n| `UNKNOWN` | Unsupported fifth status. |",
+                "a specific reason is recorded. |\n   | `UNKNOWN` | Unsupported fifth status. |",
                 1,
             ),
             encoding="utf-8",

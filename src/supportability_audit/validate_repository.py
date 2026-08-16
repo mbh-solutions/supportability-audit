@@ -351,9 +351,10 @@ def validate_status_table(errors: list[str], relative: str, text: str) -> None:
     lines = text[text.index(header) :].splitlines()
     statuses: list[str] = []
     for line in lines[2:]:
-        if not line.startswith("|"):
+        row = line.lstrip(" ")
+        if len(line) - len(row) > 3 or not row.startswith("|"):
             break
-        statuses.append(line.split("|", 2)[1].strip().strip("`"))
+        statuses.append(row.split("|", 2)[1].strip().strip("`"))
     if tuple(statuses) != STANDARD_STATUSES:
         errors.append(
             f"status table in {relative} must contain exactly: {', '.join(STANDARD_STATUSES)}"

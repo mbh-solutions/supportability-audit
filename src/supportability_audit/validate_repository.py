@@ -118,6 +118,16 @@ def validate_standard(errors: list[str]) -> None:
         errors.append(".gitattributes must preserve Standard bytes and whitespace")
 
 
+def validate_frontmatter_values(errors: list[str], fields: list[tuple[str, str]]) -> None:
+    values = dict(fields)
+    if values["name"] != "supportability-audit":
+        errors.append("skill name must be supportability-audit")
+    if ROOT.name != values["name"]:
+        errors.append("skill name must match its parent directory")
+    if values["description"] != EXPECTED_DESCRIPTION:
+        errors.append("skill description differs from the public interface contract")
+
+
 def validate_frontmatter(errors: list[str]) -> None:
     skill_path = ROOT / "SKILL.md"
     if not skill_path.is_file():
@@ -141,13 +151,7 @@ def validate_frontmatter(errors: list[str]) -> None:
     if [key for key, _ in fields] != ["name", "description"]:
         errors.append("frontmatter must contain only name then description")
         return
-    values = dict(fields)
-    if values["name"] != "supportability-audit":
-        errors.append("skill name must be supportability-audit")
-    if ROOT.name != values["name"]:
-        errors.append("skill name must match its parent directory")
-    if values["description"] != EXPECTED_DESCRIPTION:
-        errors.append("skill description differs from the public interface contract")
+    validate_frontmatter_values(errors, fields)
 
 
 def validate_links(errors: list[str]) -> None:

@@ -64,12 +64,12 @@ CLAUSE_FIELDS = (
 )
 APPLICABILITY_FIELDS = ("profiles", "condition")
 RUNTIME_CONTRACT_SHA256 = {
-    "SKILL.md": "94bf156b36fb374cc6a079268d3c29f4d2009b939493e9e60b118f315407064f",
+    "SKILL.md": "b065f7d2ee5c2024a990a10502c6cb384296ea3bd3ae54a269f6d782a9cbba43",
     "references/audit-rubric.md": (
-        "1904449cdc9d8b0099c47a780c3048a564f27cd2f6e4fe4c6d04af080f6082bd"
+        "10678dccc9853ebbf64d419dec1fde1c189ae677ac6ce7d7eae15e4c6f304aee"
     ),
     "assets/findings-report.md": (
-        "7523f6a7a6ce470711fd1eb0b4709fb90952c0a7658a170ab41700eb67bb7bf8"
+        "c6ae06bd7da35bcc2e6e0eef2e0eb204ebbe295495b2e86b49c231c66b3df766"
     ),
 }
 FAIL_CLOSED_BOTTOM_LINE = (

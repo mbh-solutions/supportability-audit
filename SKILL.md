@@ -20,7 +20,14 @@ description: Perform a read-only, evidence-backed Supportability Standard audit 
 4. Ask a question only when the target or required comparison baseline cannot be established safely.
 5. Record the Standard applicability decision. Use the full Standard for repository audits and substantive changes; use its short-task guidance only for genuinely tiny changes.
 
+## Choose the audit path
+
+- Full Standard: follow every section below and use the full findings template.
+- Short-task guidance: skip **Build the complete checklist**, **Evaluate and classify**, and **Report**. Follow the read-only and evidence sections, inspect only the provisions relevant to the tiny change, and return a concise report containing the applicability reason, exact scope, supported issue and evidence (or `No supported issue found in short-task scope`), product impact, smallest correction, `Done when` condition, validation evidence, limits, and the advisory-not-certification statement. Do not create a 218-row ledger, assign clause statuses, or use the full findings template. If inspection reveals substantive scope, switch to the Full Standard path.
+
 ## Build the complete checklist
+
+Only for the Full Standard path:
 
 1. Start with all 218 inventory clauses before evaluating evidence.
 2. Keep every clause, including auditor-process clauses, and apply its canonical condition to the audit mode and evidence.

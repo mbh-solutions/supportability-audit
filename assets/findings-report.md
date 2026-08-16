@@ -1,5 +1,7 @@
 # Product-manager summary
 
+Use this template only for the Full Standard path. For short-task guidance, use the concise output defined in the audit rubric and do not create a 218-row appendix.
+
 - Bottom line: `<Corrections required | No supported non-passing items found in audited scope>`
 - Highest-priority correction: `<plain-language correction or None>`
 - Audit scope: `<target, mode, included scope, and exclusions>`

@@ -28,6 +28,7 @@ REQUIRED_FILES = {
     "assets/findings-report.md",
     "references/audit-rubric.md",
     "references/supportability-standard.md",
+    "tests/test_validate_repository.py",
     "tests/validate_repository.py",
 }
 RUNTIME_FILES = {

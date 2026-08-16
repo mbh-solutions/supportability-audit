@@ -19,7 +19,7 @@ print(
     json.dumps(
         {
             "schema_version": "1.0",
-            "scenario": "repository-contract-validation",
+            "scenario": "repository-contract-validation-v2",
             "behavior": {
                 "exit_code": completed.returncode,
                 "stdout": completed.stdout,

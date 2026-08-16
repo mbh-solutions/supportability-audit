@@ -1,12 +1,16 @@
 from __future__ import annotations
 
+import importlib
 import shutil
 import subprocess
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+validate_repository = importlib.import_module("supportability_audit.validate_repository")
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -68,6 +72,18 @@ class RepositoryValidationTests(unittest.TestCase):
             encoding="utf-8",
         )
         self.assert_rejected("AI-vendor or product name in runtime file SKILL.md")
+
+    def test_rejects_unexpected_characterization_file(self) -> None:
+        orphan = self.repository / "tests" / "characterization" / "orphan.golden.json"
+        orphan.write_text("{}\n", encoding="utf-8")
+        with mock.patch.object(validate_repository, "ROOT", self.repository):
+            self.assertIn(
+                "tests/characterization/orphan.golden.json",
+                validate_repository.repository_files(),
+            )
+        self.assert_rejected(
+            "unexpected file or runtime surface: tests/characterization/orphan.golden.json"
+        )
 
 
 if __name__ == "__main__":

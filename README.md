@@ -22,3 +22,7 @@ Validation uses the official `skills-ref` reference validator pinned to [`69ef37
 Local validation requires Python 3.12. Install the pinned validator directly from its source repository, run `skills-ref validate` with the absolute repository path, then run the commands documented in `.github/workflows/validate.yml` and verify the final hash against the value above. The repository contract validator is `src/supportability_audit/validate_repository.py`.
 
 The absolute path works around an upstream reference-validator defect in which the otherwise equivalent argument `.` has an empty path name and is rejected. No validator behavior is patched or replaced.
+
+## Protected delivery
+
+Changes to `main` are protected by the repository validation rule and the organization's centrally managed Supportability Gate. The Gate workflow is maintained outside this repository and pinned by the organization ruleset.

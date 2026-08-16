@@ -1,0 +1,21 @@
+{
+  "cases": {
+    "accepts_clean_repository": [],
+    "rejects_altered_frontmatter": [
+      "skill name must be supportability-audit",
+      "skill name must match its parent directory"
+    ],
+    "rejects_altered_standard": [
+      "bundled Standard SHA-256 mismatch: expected 81653c5057c1555f8b6d41c6e5999d0b54caa178a2ca97a07216147ec16133e2, got 0008d5b1df55befd22a436ee8a4a5a576f648339447e33bf49bdde74ecd256d7"
+    ],
+    "rejects_broken_link": [
+      "broken relative link: README.md -> missing.md"
+    ],
+    "rejects_forbidden_runtime_text": [
+      "AI-vendor or product name in runtime file SKILL.md: 'OpenAI'"
+    ],
+    "rejects_missing_required_file": [
+      "missing required file: README.md"
+    ]
+  }
+}

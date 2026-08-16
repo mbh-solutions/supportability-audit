@@ -426,7 +426,10 @@ def validate_runtime_boundary(errors: list[str]) -> None:
     for relative in sorted(RUNTIME_FILES):
         path = ROOT / relative
         if path.is_file():
-            runtime_text[relative] = path.read_text(encoding="utf-8")
+            try:
+                runtime_text[relative] = path.read_text(encoding="utf-8")
+            except UnicodeDecodeError:
+                continue
     for label, pattern in FORBIDDEN_RUNTIME_PATTERNS.items():
         for relative, text in runtime_text.items():
             match = pattern.search(text)

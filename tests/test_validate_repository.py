@@ -78,6 +78,14 @@ class RepositoryValidationTests(unittest.TestCase):
         inventory.write_bytes(inventory.read_bytes() + b"\n")
         self.assert_rejected("canonical inventory SHA-256 mismatch")
 
+    def test_rejects_malformed_inventory_without_traceback(self) -> None:
+        inventory = self.repository / "references" / "normative_clause_inventory.json"
+        inventory.write_bytes(b"\xff")
+        result = self.run_validator()
+        self.assertEqual(1, result.returncode, result.stdout)
+        self.assertIn("canonical inventory is not valid UTF-8 JSON", result.stderr)
+        self.assertNotIn("Traceback", result.stderr)
+
     def test_rejects_wrong_standard_binding(self) -> None:
         inventory = self.read_inventory()
         inventory["standard_sha256"] = "0" * 64

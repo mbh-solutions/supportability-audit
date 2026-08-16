@@ -14,6 +14,8 @@
 | `NOT APPLICABLE` | `<count>` |
 | **Total** | **218** |
 
+Use bottom line `Corrections required` whenever any applicable clause is `FAIL` or `INCOMPLETE`. Otherwise use `No supported non-passing items found in audited scope`.
+
 ## Required corrections
 
 ### Fix first (`P1`)

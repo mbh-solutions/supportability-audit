@@ -64,6 +64,18 @@ CLAUSE_FIELDS = (
 )
 APPLICABILITY_FIELDS = ("profiles", "condition")
 STANDARD_STATUSES = ("PASS", "FAIL", "INCOMPLETE", "NOT APPLICABLE")
+FAIL_CLOSED_BOTTOM_LINE = (
+    "Use bottom line `Corrections required` whenever any applicable clause is `FAIL` or "
+    "`INCOMPLETE`. Otherwise use `No supported non-passing items found in audited scope`."
+)
+RUBRIC_FAIL_CLOSED_BOTTOM_LINE = (
+    "Use bottom line `Corrections required` when any applicable clause is `FAIL` or "
+    "`INCOMPLETE`; otherwise use `No supported non-passing items found in audited scope`."
+)
+NO_FINDINGS_CONDITION = (
+    "Only when applicable target/change clauses contain zero `FAIL` and zero `INCOMPLETE`"
+)
+NO_FINDINGS_SENTENCE = "> No supported findings in the audited scope."
 REPORT_CONTRACT = {
     "SKILL.md": (
         "## Build the complete checklist",
@@ -72,6 +84,9 @@ REPORT_CONTRACT = {
         "Every finding must reference one or more clause IDs.",
         "a product-manager summary first",
         "No other Standard status is permitted.",
+        FAIL_CLOSED_BOTTOM_LINE,
+        NO_FINDINGS_CONDITION,
+        NO_FINDINGS_SENTENCE,
     ),
     "references/audit-rubric.md": (
         "## 2. Create the clause ledger",
@@ -84,6 +99,9 @@ REPORT_CONTRACT = {
         "Status totals must reconcile to 218.",
         "Every finding must reference one or more clause IDs.",
         "No other Standard status is permitted.",
+        RUBRIC_FAIL_CLOSED_BOTTOM_LINE,
+        NO_FINDINGS_CONDITION,
+        NO_FINDINGS_SENTENCE,
     ),
     "assets/findings-report.md": (
         "# Product-manager summary",
@@ -98,6 +116,7 @@ REPORT_CONTRACT = {
         "| `INCOMPLETE` | `<count>` |",
         "| `NOT APPLICABLE` | `<count>` |",
         "| **Total** | **218** |",
+        FAIL_CLOSED_BOTTOM_LINE,
         "## Required corrections",
         "### Fix first (`P1`)",
         "### Fix next (`P2`)",
@@ -116,6 +135,8 @@ REPORT_CONTRACT = {
         "| Standard section | Clause ID | Standard line | Requirement | Applicability reason "
         "| Evidence | Status | Finding IDs |",
         "Every inventory clause ID appears exactly once.",
+        NO_FINDINGS_CONDITION,
+        NO_FINDINGS_SENTENCE,
         "This audit is advisory and is not Supportability Gate certification.",
         "<PASS | FAIL | INCOMPLETE | NOT APPLICABLE>",
         "<every FAIL/INCOMPLETE maps to a finding; every finding maps to clauses>",

@@ -148,6 +148,20 @@ class RepositoryValidationTests(unittest.TestCase):
             "Applicability reason | Evidence | Status | Finding IDs |"
         )
 
+    def test_rejects_missing_fail_closed_predicate(self) -> None:
+        skill = self.repository / "SKILL.md"
+        skill.write_text(
+            skill.read_text(encoding="utf-8").replace(
+                validate_repository.FAIL_CLOSED_BOTTOM_LINE,
+                "Choose either bottom line.",
+                1,
+            ),
+            encoding="utf-8",
+        )
+        self.assert_rejected(
+            "missing report contract in SKILL.md: " + validate_repository.FAIL_CLOSED_BOTTOM_LINE
+        )
+
     def test_rejects_extra_standard_status(self) -> None:
         skill = self.repository / "SKILL.md"
         skill.write_text(

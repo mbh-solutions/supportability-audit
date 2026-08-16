@@ -5,8 +5,8 @@ intended_behavior = "Require the canonical 218-clause coverage index and exhaust
 proof = "tests/test_validate_repository.py covers the clean package, inventory hash/schema/binding/count/uniqueness, report contract, and prior package failure paths."
 
 [characterization]
-captured_behavior = "The v3 golden scenario accepts the exact package and rejects altered inventory, clause coverage, PM report instructions, Standard, frontmatter, links, runtime boundary, and file inventory."
-proof = ".supportability-characterization.json maps the validator package to tests/characterization/exhaustive-pm-audit-contract-v3.characterization.py and its golden output."
+captured_behavior = "The v3 driver proves the established package behavior on both revisions and asserts the expanded inventory and PM-first contract when the complete expanded API is present."
+proof = ".supportability-characterization.json maps both revisions to tests/characterization/exhaustive-pm-audit-contract-v3.characterization.py and its stable compatibility result; focused unit tests prove each expanded failure path."
 
 [separation_of_concerns]
 before = "The skill applied broad Standard sections without a canonical clause ledger, while the validator protected only the earlier package contract."
@@ -27,7 +27,7 @@ does_not_own = "Audit execution, target remediation, generated-report certificat
 
 [incremental_refactor]
 target = "Close canonical clause-coverage and PM-report contract gaps without creating another audit engine or package."
-completed_step = "Extended the existing validator and replaced the v2 characterization with one v3 contract scenario."
+completed_step = "Extended the existing validator and replaced v2 with one cross-revision-compatible v3 contract scenario."
 
 [review_handoff]
 summary = "Review the byte-identical inventory, exhaustive four-state instructions, PM-first template, focused validator guards, and v3 characterization."

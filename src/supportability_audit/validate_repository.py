@@ -1,14 +1,19 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import re
 import sys
 from pathlib import Path
+from typing import Any
 from urllib.parse import unquote
 
 ROOT = Path(__file__).resolve().parents[2]
 STANDARD = ROOT / "references" / "supportability-standard.md"
+INVENTORY = ROOT / "references" / "normative_clause_inventory.json"
 EXPECTED_STANDARD_SHA256 = "81653c5057c1555f8b6d41c6e5999d0b54caa178a2ca97a07216147ec16133e2"
+EXPECTED_INVENTORY_SHA256 = "02f58effce7bb27bf57536585d42b6d0241929ba29377fdbded4d93ecfe3eb9a"
+EXPECTED_INVENTORY_CLAUSES = 218
 EXPECTED_DESCRIPTION = (
     "Perform a read-only, evidence-backed Supportability Standard audit of an entire "
     "repository, a proposed change or diff, or supplied code, whether or not "
@@ -28,18 +33,93 @@ REQUIRED_FILES = {
     "assets/findings-report.md",
     "pyproject.toml",
     "references/audit-rubric.md",
+    "references/normative_clause_inventory.json",
     "references/supportability-standard.md",
     "src/supportability_audit/__init__.py",
     "src/supportability_audit/validate_repository.py",
-    "tests/characterization/repository-contract-validation-v2.characterization.py",
-    "tests/characterization/repository-contract-validation-v2.golden.json",
+    "tests/characterization/exhaustive-pm-audit-contract-v3.characterization.py",
+    "tests/characterization/exhaustive-pm-audit-contract-v3.golden.json",
     "tests/test_validate_repository.py",
 }
 RUNTIME_FILES = {
     "SKILL.md",
     "assets/findings-report.md",
     "references/audit-rubric.md",
+    "references/normative_clause_inventory.json",
     "references/supportability-standard.md",
+}
+EXPECTED_ATTRIBUTES = (
+    "references/supportability-standard.md -text -whitespace\n"
+    "references/normative_clause_inventory.json -text -whitespace\n"
+)
+INVENTORY_FIELDS = ("schema_version", "standard_sha256", "clauses")
+CLAUSE_FIELDS = (
+    "clause_id",
+    "source_line",
+    "statement",
+    "applicability",
+    "enforcement_owner",
+    "evidence_requirement",
+    "blocking_test",
+)
+APPLICABILITY_FIELDS = ("profiles", "condition")
+STANDARD_STATUSES = ("PASS", "FAIL", "INCOMPLETE", "NOT APPLICABLE")
+REPORT_CONTRACT = {
+    "SKILL.md": (
+        "## Build the complete checklist",
+        "All 218 clause IDs must appear exactly once.",
+        "Every `FAIL` and `INCOMPLETE` clause must reference at least one finding ID.",
+        "Every finding must reference one or more clause IDs.",
+        "a product-manager summary first",
+        "No other Standard status is permitted.",
+    ),
+    "references/audit-rubric.md": (
+        "## 2. Create the clause ledger",
+        "| `PASS` | Direct evidence proves the applicable requirement is satisfied. |",
+        "| `FAIL` | Direct evidence proves the applicable requirement is unmet. |",
+        "| `INCOMPLETE` | Required proof is absent, unavailable, restricted, "
+        "or inconclusive, so `PASS` cannot be supported. |",
+        "| `NOT APPLICABLE` | The clause's stated condition does not apply; "
+        "the row states the specific reason. |",
+        "Status totals must reconcile to 218.",
+        "Every finding must reference one or more clause IDs.",
+        "No other Standard status is permitted.",
+    ),
+    "assets/findings-report.md": (
+        "# Product-manager summary",
+        "- Bottom line:",
+        "- Highest-priority correction:",
+        "- Audit scope:",
+        "- Important limits:",
+        "- Assurance:",
+        "| Status | Count |",
+        "| `PASS` | `<count>` |",
+        "| `FAIL` | `<count>` |",
+        "| `INCOMPLETE` | `<count>` |",
+        "| `NOT APPLICABLE` | `<count>` |",
+        "| **Total** | **218** |",
+        "## Required corrections",
+        "### Fix first (`P1`)",
+        "### Fix next (`P2`)",
+        "### Required local correction (`P3`)",
+        "## Findings",
+        "- What is wrong:",
+        "- Why it matters to the product:",
+        "- Required correction:",
+        "- Done when:",
+        "- Affected Standard item count:",
+        "## Technical appendix",
+        "### Full clause-level checklist",
+        "- Checklist rows: `218`",
+        "- Status reconciliation:",
+        "- Mapping reconciliation:",
+        "| Standard section | Clause ID | Standard line | Requirement | Applicability reason "
+        "| Evidence | Status | Finding IDs |",
+        "Every inventory clause ID appears exactly once.",
+        "This audit is advisory and is not Supportability Gate certification.",
+        "<PASS | FAIL | INCOMPLETE | NOT APPLICABLE>",
+        "<every FAIL/INCOMPLETE maps to a finding; every finding maps to clauses>",
+    ),
 }
 RELATIVE_LINK = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
 REFERENCE_LINK = re.compile(r"(?m)^\s{0,3}\[[^\]]+\]:\s*(\S+)")
@@ -83,6 +163,7 @@ REQUIRED_GUARDS = (
     "If audit and remediation are requested together, perform only the audit and leave "
     "remediation for separate authorization.",
     "Do not emit terminal gate verdicts, compliance certification, or equivalent claims.",
+    "Do not create another Gate or rules engine.",
 )
 
 
@@ -113,9 +194,149 @@ def validate_standard(errors: list[str]) -> None:
         errors.append(
             f"bundled Standard SHA-256 mismatch: expected {EXPECTED_STANDARD_SHA256}, got {digest}"
         )
-    attributes = (ROOT / ".gitattributes").read_text(encoding="utf-8")
-    if attributes != "references/supportability-standard.md -text -whitespace\n":
-        errors.append(".gitattributes must preserve Standard bytes and whitespace")
+    attributes_path = ROOT / ".gitattributes"
+    if attributes_path.is_file():
+        attributes = attributes_path.read_text(encoding="utf-8")
+        if attributes != EXPECTED_ATTRIBUTES:
+            errors.append(".gitattributes must preserve Standard and inventory bytes")
+
+
+def validate_exact_fields(
+    errors: list[str], value: Any, expected: tuple[str, ...], label: str
+) -> bool:
+    if not isinstance(value, dict):
+        errors.append(f"{label} must be a JSON object")
+        return False
+    if set(value) != set(expected):
+        errors.append(f"{label} fields must be exactly: {', '.join(expected)}")
+        return False
+    return True
+
+
+def validate_required_strings(
+    errors: list[str], value: dict[str, Any], fields: tuple[str, ...], label: str
+) -> None:
+    for field in fields:
+        if not isinstance(value[field], str) or not value[field].strip():
+            errors.append(f"{label} {field} must be a non-empty string")
+
+
+def validate_applicability(errors: list[str], value: Any, label: str) -> None:
+    if not validate_exact_fields(errors, value, APPLICABILITY_FIELDS, label):
+        return
+    profiles = value["profiles"]
+    if (
+        not isinstance(profiles, list)
+        or not profiles
+        or not all(isinstance(profile, str) and profile for profile in profiles)
+    ):
+        errors.append(f"{label} profiles must be a non-empty string array")
+    if not isinstance(value["condition"], str) or not value["condition"].strip():
+        errors.append(f"{label} condition must be a non-empty string")
+
+
+def validate_clause(errors: list[str], value: Any, index: int) -> str | None:
+    label = f"inventory clause {index}"
+    if not validate_exact_fields(errors, value, CLAUSE_FIELDS, label):
+        return None
+    validate_required_strings(
+        errors,
+        value,
+        (
+            "clause_id",
+            "statement",
+            "enforcement_owner",
+            "evidence_requirement",
+            "blocking_test",
+        ),
+        label,
+    )
+    raw_clause_id = value["clause_id"]
+    clause_id: str | None = raw_clause_id if isinstance(raw_clause_id, str) else None
+    if clause_id is None or re.fullmatch(r"SS-\d{4}", clause_id) is None:
+        errors.append(f"{label} clause_id must match SS-0000")
+        clause_id = None
+    if not isinstance(value["source_line"], int) or isinstance(value["source_line"], bool):
+        errors.append(f"{label} source_line must be an integer")
+    validate_applicability(errors, value["applicability"], f"{label} applicability")
+    return clause_id
+
+
+def validate_inventory_document(errors: list[str], value: Any) -> None:
+    if not validate_exact_fields(errors, value, INVENTORY_FIELDS, "inventory"):
+        return
+    if value["schema_version"] != "1.0":
+        errors.append("inventory schema_version must be '1.0'")
+    if value["standard_sha256"] != EXPECTED_STANDARD_SHA256:
+        errors.append(
+            "inventory Standard SHA-256 binding mismatch: "
+            f"expected {EXPECTED_STANDARD_SHA256}, got {value['standard_sha256']}"
+        )
+    clauses = value["clauses"]
+    if not isinstance(clauses, list):
+        errors.append("inventory clauses must be an array")
+        return
+    if len(clauses) != EXPECTED_INVENTORY_CLAUSES:
+        errors.append(
+            f"inventory must contain {EXPECTED_INVENTORY_CLAUSES} clauses: got {len(clauses)}"
+        )
+    clause_ids = [
+        clause_id
+        for index, clause in enumerate(clauses)
+        if (clause_id := validate_clause(errors, clause, index)) is not None
+    ]
+    if len(set(clause_ids)) != len(clause_ids):
+        errors.append(
+            "inventory clause IDs must be unique: "
+            f"{len(set(clause_ids))} unique of {len(clause_ids)}"
+        )
+
+
+def validate_inventory(errors: list[str]) -> None:
+    if not INVENTORY.is_file():
+        return
+    raw = INVENTORY.read_bytes()
+    digest = hashlib.sha256(raw).hexdigest()
+    if digest != EXPECTED_INVENTORY_SHA256:
+        errors.append(
+            "canonical inventory SHA-256 mismatch: "
+            f"expected {EXPECTED_INVENTORY_SHA256}, got {digest}"
+        )
+    try:
+        value = json.loads(raw)
+    except (json.JSONDecodeError, UnicodeDecodeError) as error:
+        errors.append(f"canonical inventory is not valid UTF-8 JSON: {error}")
+        return
+    validate_inventory_document(errors, value)
+
+
+def validate_report_contract(errors: list[str]) -> None:
+    for relative, required_text in REPORT_CONTRACT.items():
+        path = ROOT / relative
+        if not path.is_file():
+            continue
+        text = path.read_text(encoding="utf-8")
+        for item in required_text:
+            if item not in text:
+                errors.append(f"missing report contract in {relative}: {item}")
+        if relative in {"SKILL.md", "references/audit-rubric.md"}:
+            validate_status_table(errors, relative, text)
+
+
+def validate_status_table(errors: list[str], relative: str, text: str) -> None:
+    header = "| Status | Required meaning |"
+    if header not in text:
+        return
+    lines = text[text.index(header) :].splitlines()
+    statuses: list[str] = []
+    for line in lines[2:]:
+        if not line.startswith("|"):
+            break
+        statuses.append(line.split("|", 2)[1].strip().strip("`"))
+    if tuple(statuses) != STANDARD_STATUSES:
+        errors.append(
+            f"status table in {relative} must contain exactly: {', '.join(STANDARD_STATUSES)}"
+        )
 
 
 def validate_frontmatter_values(errors: list[str], fields: list[tuple[str, str]]) -> None:
@@ -204,8 +425,10 @@ def main() -> int:
     errors: list[str] = []
     validate_files(errors)
     validate_standard(errors)
+    validate_inventory(errors)
     validate_frontmatter(errors)
     validate_links(errors)
+    validate_report_contract(errors)
     validate_runtime_boundary(errors)
     if errors:
         for error in errors:

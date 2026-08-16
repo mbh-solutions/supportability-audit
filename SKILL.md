@@ -8,8 +8,9 @@ description: Perform a read-only, evidence-backed Supportability Standard audit 
 ## Load authority
 
 1. Read the complete [Supportability Standard](references/supportability-standard.md) before every audit.
-2. Read the [audit rubric](references/audit-rubric.md) for procedure and evidence rules.
-3. Treat the Standard as authority. Use the rubric only to apply it consistently.
+2. Read the complete [canonical clause inventory](references/normative_clause_inventory.json).
+3. Read the [audit rubric](references/audit-rubric.md) for procedure and evidence rules.
+4. Treat the Standard as authority. The inventory is a coverage index only; it cannot reinterpret or replace the Standard.
 
 ## Establish the audit
 
@@ -18,6 +19,26 @@ description: Perform a read-only, evidence-backed Supportability Standard audit 
 3. Honor a user-requested scope restriction and disclose what it excludes.
 4. Ask a question only when the target or required comparison baseline cannot be established safely.
 5. Record the Standard applicability decision. Use the full Standard for repository audits and substantive changes; use its short-task guidance only for genuinely tiny changes.
+
+## Build the complete checklist
+
+1. Start with all 218 inventory clauses before evaluating evidence.
+2. Keep every clause, including auditor-process clauses, and apply its canonical condition to the audit mode and evidence.
+3. Group the completed checklist by the corresponding Standard section using the clause's source line.
+4. Give every clause exactly one Standard status from only these four values:
+
+| Status | Required meaning |
+|---|---|
+| `PASS` | Direct evidence proves the applicable requirement is satisfied. |
+| `FAIL` | Direct evidence proves the applicable requirement is unmet. |
+| `INCOMPLETE` | Required proof is absent, unavailable, restricted, or inconclusive, so `PASS` cannot be supported. |
+| `NOT APPLICABLE` | The clause's stated condition does not apply; a specific reason is recorded. |
+
+No other Standard status is permitted.
+
+All 218 clause IDs must appear exactly once. No clause may use `Not established` or `Unknown` as its Standard status. `Not established` may describe separate metadata such as Gate detection, but never replace a clause disposition.
+
+Every `FAIL` and `INCOMPLETE` clause must reference at least one finding ID. Every finding must reference one or more clause IDs. One root-cause finding may cover several clauses. A limit affecting an applicable clause must produce `INCOMPLETE` and a mapped finding; it cannot appear only in a limits section.
 
 ## Preserve the read-only boundary
 
@@ -28,6 +49,7 @@ description: Perform a read-only, evidence-backed Supportability Standard audit 
 - Never modify the audited target. Never create commits, comments, checks, reviews, or other published output.
 - If audit and remediation are requested together, perform only the audit and leave remediation for separate authorization.
 - Do not invoke Supportability Gate. Detect integration only from direct repository artifacts.
+- Do not create another Gate or rules engine.
 
 ## Inspect evidence
 
@@ -43,9 +65,10 @@ description: Perform a read-only, evidence-backed Supportability Standard audit 
 
 ## Evaluate and classify
 
-- Apply every relevant Standard section using the rubric.
+- Apply every inventory clause using the Standard and rubric.
 - Determine Gate integration from `.supportability.toml`, `.supportability-review.toml`, or relevant workflow configuration. Report exactly `Detected`, `Not detected`, or `Not established`, with supporting evidence.
-- Report only evidence-supported, actionable findings. Deduplicate related symptoms under their shared root cause.
+- Treat absent or inconclusive proof for an applicable requirement as `INCOMPLETE`, never `PASS`.
+- Report every `FAIL` and `INCOMPLETE` as an actionable finding. Deduplicate related symptoms under their shared root cause without dropping clause mappings.
 - Number findings stably in impact order. Assign `P1`, `P2`, or `P3` using the rubric.
 - Use origin `Introduced` or `Pre-existing` only when baseline comparison proves it. Otherwise use `Undetermined`.
 - In proposed-change mode, report actionable issues present at both baseline and head as `Pre-existing` and head-only issues as `Introduced` when they are within the requested scope.
@@ -56,13 +79,14 @@ description: Perform a read-only, evidence-backed Supportability Standard audit 
 
 Render the response using the structure in [findings-report.md](assets/findings-report.md). Include:
 
-- audited target, mode, scope, comparison baseline, and applicability decision;
-- Gate integration status and supporting evidence;
-- evidence inspected, commands actually run, and explicit limits;
-- findings ordered by supportability impact; and
-- unknowns and evidence that could not be established.
+- a product-manager summary first, with bottom line, reconciled status counts, highest-priority correction, scope, important limits, and an advisory-not-certification statement;
+- required corrections grouped as `Fix first` for `P1`, `Fix next` for `P2`, and `Required local correction` for `P3`;
+- plain-language findings stating what is wrong, product impact, one required correction, an observable `Done when` condition, and affected Standard item count; and
+- a technical appendix containing the complete 218-row checklist, exact evidence, audit commands, validation evidence, Gate integration, raw priority/origin labels, confidence, limits, and remaining uncertainty.
 
-When no supported finding exists, write exactly:
+Use bottom line `Corrections required` whenever any applicable clause is `FAIL` or `INCOMPLETE`. Otherwise use `No supported non-passing items found in audited scope`.
+
+Only when applicable target/change clauses contain zero `FAIL` and zero `INCOMPLETE`, write exactly:
 
 > No supported findings in the audited scope.
 

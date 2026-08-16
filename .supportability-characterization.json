@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "scenarios": [
     {
-      "id": "repository-contract-validation-v2",
+      "id": "exhaustive-pm-audit-contract-v3",
       "kind": "regression",
       "covers": [
         "src/supportability_audit/__init__.py",

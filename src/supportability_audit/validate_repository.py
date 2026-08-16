@@ -8,7 +8,9 @@ from urllib.parse import unquote
 
 ROOT = Path(__file__).resolve().parents[2]
 STANDARD = ROOT / "references" / "supportability-standard.md"
-EXPECTED_STANDARD_SHA256 = "81653c5057c1555f8b6d41c6e5999d0b54caa178a2ca97a07216147ec16133e2"
+EXPECTED_STANDARD_SHA256 = (
+    "81653c5057c1555f8b6d41c6e5999d0b54caa178a2ca97a07216147ec16133e2"
+)
 EXPECTED_DESCRIPTION = (
     "Perform a read-only, evidence-backed Supportability Standard audit of an entire "
     "repository, a proposed change or diff, or supplied code, whether or not "
@@ -26,10 +28,13 @@ REQUIRED_FILES = {
     "README.md",
     "SKILL.md",
     "assets/findings-report.md",
+    "pyproject.toml",
     "references/audit-rubric.md",
     "references/supportability-standard.md",
     "src/supportability_audit/__init__.py",
     "src/supportability_audit/validate_repository.py",
+    "tests/characterization/repository-contract-validation-v2.characterization.py",
+    "tests/characterization/repository-contract-validation-v2.golden.json",
     "tests/test_validate_repository.py",
 }
 RUNTIME_FILES = {
@@ -89,19 +94,16 @@ def repository_files() -> set[str]:
         relative = path.relative_to(ROOT)
         if ".git" in relative.parts or "__pycache__" in relative.parts:
             continue
-        if relative.parts[:2] == ("tests", "characterization"):
-            continue
         if path.is_file() and path.suffix != ".pyc":
             files.add(relative.as_posix())
     return files
 
 
 def validate_files(errors: list[str]) -> None:
-    required_files = REQUIRED_FILES | {"pyproject.toml"}
     present = repository_files()
-    for path in sorted(required_files - present):
+    for path in sorted(REQUIRED_FILES - present):
         errors.append(f"missing required file: {path}")
-    for path in sorted(present - required_files):
+    for path in sorted(present - REQUIRED_FILES):
         errors.append(f"unexpected file or runtime surface: {path}")
 
 
@@ -118,7 +120,9 @@ def validate_standard(errors: list[str]) -> None:
         errors.append(".gitattributes must preserve Standard bytes and whitespace")
 
 
-def validate_frontmatter_values(errors: list[str], fields: list[tuple[str, str]]) -> None:
+def validate_frontmatter_values(
+    errors: list[str], fields: list[tuple[str, str]]
+) -> None:
     values = dict(fields)
     if values["name"] != "supportability-audit":
         errors.append("skill name must be supportability-audit")
@@ -169,7 +173,9 @@ def validate_links(errors: list[str]) -> None:
                 continue
             resolved = (path.parent / unquote(target)).resolve()
             if not resolved.is_relative_to(ROOT.resolve()):
-                errors.append(f"relative link escapes skill root: {relative} -> {raw_target}")
+                errors.append(
+                    f"relative link escapes skill root: {relative} -> {raw_target}"
+                )
             elif not resolved.exists():
                 errors.append(f"broken relative link: {relative} -> {raw_target}")
 

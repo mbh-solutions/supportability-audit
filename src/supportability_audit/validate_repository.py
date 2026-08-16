@@ -6,12 +6,9 @@ import sys
 from pathlib import Path
 from urllib.parse import unquote
 
-
 ROOT = Path(__file__).resolve().parents[2]
 STANDARD = ROOT / "references" / "supportability-standard.md"
-EXPECTED_STANDARD_SHA256 = (
-    "81653c5057c1555f8b6d41c6e5999d0b54caa178a2ca97a07216147ec16133e2"
-)
+EXPECTED_STANDARD_SHA256 = "81653c5057c1555f8b6d41c6e5999d0b54caa178a2ca97a07216147ec16133e2"
 EXPECTED_DESCRIPTION = (
     "Perform a read-only, evidence-backed Supportability Standard audit of an entire "
     "repository, a proposed change or diff, or supplied code, whether or not "
@@ -100,10 +97,11 @@ def repository_files() -> set[str]:
 
 
 def validate_files(errors: list[str]) -> None:
+    required_files = REQUIRED_FILES | {"pyproject.toml"}
     present = repository_files()
-    for path in sorted(REQUIRED_FILES - present):
+    for path in sorted(required_files - present):
         errors.append(f"missing required file: {path}")
-    for path in sorted(present - REQUIRED_FILES):
+    for path in sorted(present - required_files):
         errors.append(f"unexpected file or runtime surface: {path}")
 
 
@@ -113,8 +111,7 @@ def validate_standard(errors: list[str]) -> None:
     digest = hashlib.sha256(STANDARD.read_bytes()).hexdigest()
     if digest != EXPECTED_STANDARD_SHA256:
         errors.append(
-            f"bundled Standard SHA-256 mismatch: expected {EXPECTED_STANDARD_SHA256}, "
-            f"got {digest}"
+            f"bundled Standard SHA-256 mismatch: expected {EXPECTED_STANDARD_SHA256}, got {digest}"
         )
     attributes = (ROOT / ".gitattributes").read_text(encoding="utf-8")
     if attributes != "references/supportability-standard.md -text -whitespace\n":
@@ -173,6 +170,14 @@ def validate_links(errors: list[str]) -> None:
                 errors.append(f"broken relative link: {relative} -> {raw_target}")
 
 
+def validate_skill_guards(errors: list[str], skill: str) -> None:
+    for guard in REQUIRED_GUARDS:
+        if guard not in skill:
+            errors.append(f"missing read-only runtime guard: {guard}")
+    if "No supported findings in the audited scope." not in skill:
+        errors.append("SKILL.md lacks the exact no-findings sentence")
+
+
 def validate_runtime_boundary(errors: list[str]) -> None:
     runtime_text: dict[str, str] = {}
     for relative in sorted(RUNTIME_FILES):
@@ -184,12 +189,7 @@ def validate_runtime_boundary(errors: list[str]) -> None:
             match = pattern.search(text)
             if match is not None:
                 errors.append(f"{label} in runtime file {relative}: {match.group(0)!r}")
-    skill = runtime_text.get("SKILL.md", "")
-    for guard in REQUIRED_GUARDS:
-        if guard not in skill:
-            errors.append(f"missing read-only runtime guard: {guard}")
-    if "No supported findings in the audited scope." not in skill:
-        errors.append("SKILL.md lacks the exact no-findings sentence")
+    validate_skill_guards(errors, runtime_text.get("SKILL.md", ""))
     if (ROOT / "scripts").exists():
         errors.append("runtime scripts are prohibited")
     if (ROOT / "agents").exists():

@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "supportability-audit"
+version = "1.0.0"
+description = "Read-only Supportability Standard audit skill"
+requires-python = ">=3.12"
+
+[tool.setuptools.packages.find]
+where = ["src"]

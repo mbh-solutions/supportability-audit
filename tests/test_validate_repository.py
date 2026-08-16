@@ -1,11 +1,16 @@
 from __future__ import annotations
 
+import importlib
 import shutil
 import subprocess
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+validate_repository = importlib.import_module("supportability_audit.validate_repository")
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -68,6 +73,16 @@ class RepositoryValidationTests(unittest.TestCase):
             encoding="utf-8",
         )
         self.assert_rejected("AI-vendor or product name in runtime file SKILL.md")
+
+    def test_characterization_drivers_are_not_runtime_surface(self) -> None:
+        driver = self.repository / "tests" / "characterization" / "sample.characterization.py"
+        driver.parent.mkdir(parents=True, exist_ok=True)
+        driver.write_text("raise SystemExit\n", encoding="utf-8")
+        with mock.patch.object(validate_repository, "ROOT", self.repository):
+            self.assertNotIn(
+                "tests/characterization/sample.characterization.py",
+                validate_repository.repository_files(),
+            )
 
 
 if __name__ == "__main__":

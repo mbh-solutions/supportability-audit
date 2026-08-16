@@ -92,6 +92,8 @@ def repository_files() -> set[str]:
         relative = path.relative_to(ROOT)
         if ".git" in relative.parts or "__pycache__" in relative.parts:
             continue
+        if relative.parts[:2] == ("tests", "characterization"):
+            continue
         if path.is_file() and path.suffix != ".pyc":
             files.add(relative.as_posix())
     return files

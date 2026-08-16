@@ -1,0 +1,52 @@
+schema_version = "1.0"
+
+[behavior]
+intended_behavior = "Reject incomplete or altered Supportability Audit skill packages while accepting the exact published repository contract."
+proof = "tests/test_validate_repository.py exercises the repository validator's success and representative failure paths."
+
+[characterization]
+captured_behavior = "Repository validation still checks the fixed file inventory, bundled Standard hash, skill frontmatter, relative links, and read-only runtime boundary."
+proof = ".supportability-characterization.json maps the validator package to the existing regression suite."
+
+[separation_of_concerns]
+before = "Executable repository validation lived under tests beside its regression tests."
+after = "Executable validation lives under src while tests retain only regression-test responsibility."
+
+[architecture]
+dependency_direction = "The regression suite invokes the repository validator; the validator uses only the Python standard library and repository files."
+reviewed_paths = [
+    "src/supportability_audit/__init__.py",
+    "src/supportability_audit/validate_repository.py",
+    "tests/test_validate_repository.py",
+]
+
+[responsibility_boundary]
+path = "src/supportability_audit/validate_repository.py"
+owns = "Deterministic validation of the Supportability Audit repository package."
+does_not_own = "Audit execution, remediation, GitHub protection, or Supportability Gate implementation."
+
+[incremental_refactor]
+target = "Place executable Python validation under the central Gate's measured source boundary without changing validation behavior."
+completed_step = "Moved the existing validator from tests to src and updated its existing callers."
+
+[review_handoff]
+summary = "Review the behavior-preserving validator move and the three repository-specific central Gate evidence files."
+remaining_risks = ["The repository remains intentionally limited to a read-only audit skill and its package validator."]
+
+[human_review]
+naming = "Repository validation and audit runtime responsibilities remain explicit."
+cohesion = "The source package owns validation; tests own regression checks; the skill files own audit instructions."
+intended_behavior = "The audit remains read-only and vendor-neutral while its repository contract remains fail-closed."
+reviewability = "The change reuses the existing validator and adds only the central Gate's required evidence surface."
+
+[[module_boundaries]]
+path = "src/supportability_audit/__init__.py"
+owner_path = "src/supportability_audit/validate_repository.py"
+basis = "responsibility"
+justification = "The package marker belongs to the repository-validation boundary owned by the validator module."
+
+[[module_boundaries]]
+path = "src/supportability_audit/validate_repository.py"
+owner_path = "src/supportability_audit/validate_repository.py"
+basis = "responsibility"
+justification = "The validator module owns deterministic repository-package validation."

@@ -22,7 +22,7 @@ class RepositoryValidationTests(unittest.TestCase):
 
     def run_validator(self) -> subprocess.CompletedProcess[str]:
         return subprocess.run(
-            [sys.executable, "tests/validate_repository.py"],
+            [sys.executable, "src/supportability_audit/validate_repository.py"],
             cwd=self.repository,
             capture_output=True,
             text=True,

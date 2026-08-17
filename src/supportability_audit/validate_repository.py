@@ -64,12 +64,12 @@ CLAUSE_FIELDS = (
 )
 APPLICABILITY_FIELDS = ("profiles", "condition")
 RUNTIME_CONTRACT_SHA256 = {
-    "SKILL.md": "b065f7d2ee5c2024a990a10502c6cb384296ea3bd3ae54a269f6d782a9cbba43",
+    "SKILL.md": "90c03046c6ed590e6421e5991e45cf4a6d972f83cebc308b7f6486d13aab422a",
     "references/audit-rubric.md": (
-        "10678dccc9853ebbf64d419dec1fde1c189ae677ac6ce7d7eae15e4c6f304aee"
+        "52398b2ece8bf81e2c95629b5709fd5dc6f842d751fb823b12acab4aaa53a07b"
     ),
     "assets/findings-report.md": (
-        "c6ae06bd7da35bcc2e6e0eef2e0eb204ebbe295495b2e86b49c231c66b3df766"
+        "731ca57c79293ff1d812e6ea426267cb80217319702f25dc4ccd1bc73bbd422d"
     ),
 }
 FAIL_CLOSED_BOTTOM_LINE = (
@@ -81,7 +81,7 @@ RUBRIC_FAIL_CLOSED_BOTTOM_LINE = (
     "`INCOMPLETE`; otherwise use `No supported non-passing items found in audited scope`."
 )
 NO_FINDINGS_CONDITION = (
-    "Only when applicable target/change clauses contain zero `FAIL` and zero `INCOMPLETE`"
+    "Only when all applicable clauses have zero `FAIL` and zero `INCOMPLETE` dispositions"
 )
 NO_FINDINGS_SENTENCE = "> No supported findings in the audited scope."
 REPORT_CONTRACT = {

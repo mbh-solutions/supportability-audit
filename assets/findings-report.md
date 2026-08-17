@@ -44,7 +44,7 @@ Use bottom line `Corrections required` whenever any applicable clause is `FAIL` 
 
 Repeat only for distinct root causes. Keep IDs stable and order findings by impact.
 
-Only when applicable target/change clauses contain zero `FAIL` and zero `INCOMPLETE`, replace finding blocks with exactly:
+Only when all applicable clauses have zero `FAIL` and zero `INCOMPLETE` dispositions, replace finding blocks with exactly:
 
 > No supported findings in the audited scope.
 

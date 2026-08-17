@@ -27,9 +27,9 @@ The clause coverage index has separate provenance:
 
 ## Usage
 
-Run the skill against a whole repository, proposed change, or supplied code. It creates one disposition for every canonical clause using only `PASS`, `FAIL`, `INCOMPLETE`, or `NOT APPLICABLE`. Every applicable non-passing clause maps to a plain-language finding.
+Run the skill against a whole repository, proposed change, or supplied code. Full Standard audits create one disposition for every canonical clause using only `PASS`, `FAIL`, `INCOMPLETE`, or `NOT APPLICABLE`; every applicable non-passing clause maps to a plain-language finding. Genuinely tiny changes use the Standard's short-task guidance and return a concise evidence-backed report without a clause ledger or Gate classification. Substantive scope always switches to the Full Standard path.
 
-Reports lead with the product bottom line, correction order, impact, and observable completion criteria. The full 218-row checklist, exact evidence, commands, limits, priorities, origins, and Gate details remain in the technical appendix. The result is advisory; it is not Gate certification.
+Full Standard reports lead with the product bottom line, correction order, impact, and observable completion criteria; the 218-row checklist, exact evidence, commands, limits, priorities, origins, and Gate details remain in the technical appendix. Short-task reports state applicability, exact scope, supported issues and evidence, validation evidence, limits, and the same advisory-not-certification boundary.
 
 ## Validation
 

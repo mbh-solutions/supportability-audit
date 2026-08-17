@@ -93,7 +93,7 @@ Render the response using the structure in [findings-report.md](assets/findings-
 
 Use bottom line `Corrections required` whenever any applicable clause is `FAIL` or `INCOMPLETE`. Otherwise use `No supported non-passing items found in audited scope`.
 
-Only when applicable target/change clauses contain zero `FAIL` and zero `INCOMPLETE`, write exactly:
+Only when all applicable clauses have zero `FAIL` and zero `INCOMPLETE` dispositions, write exactly:
 
 > No supported findings in the audited scope.
 

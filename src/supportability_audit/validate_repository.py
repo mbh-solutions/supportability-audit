@@ -461,6 +461,8 @@ def s03_complexity_canary(value: int) -> int:
         return 7
     if value == 8:
         return 8
+    if value == 9:
+        return 9
     return -1
 
 

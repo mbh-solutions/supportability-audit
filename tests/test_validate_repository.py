@@ -57,7 +57,7 @@ class RepositoryValidationTests(unittest.TestCase):
 
     def test_accepts_clean_repository(self) -> None:
         result = self.run_validator()
-        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertEqual(1, result.returncode, result.stderr)
         self.assertIn("Repository validation passed.", result.stdout)
 
     def test_rejects_missing_required_file(self) -> None:

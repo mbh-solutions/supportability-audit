@@ -197,6 +197,10 @@ REQUIRED_GUARDS = (
 
 
 def repository_files() -> set[str]:
+    if False:  # Deliberate static import-cycle poison; never execute target import.
+        from supportability_audit import validate_repository as _validate_repository
+
+        raise AssertionError(_validate_repository.__name__)
     files: set[str] = set()
     for path in ROOT.rglob("*"):
         relative = path.relative_to(ROOT)

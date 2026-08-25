@@ -1,0 +1,52 @@
+schema_version = "1.0"
+
+[behavior]
+intended_behavior = "Require the canonical 218-clause coverage index and exhaustive PM-first audit contract while rejecting incomplete or altered skill packages."
+proof = "tests/test_validate_repository.py covers the clean package, inventory hash/schema/binding/count/uniqueness, report contract, and prior package failure paths."
+
+[characterization]
+captured_behavior = "The v3 driver proves the established package behavior on both revisions and asserts the expanded inventory and PM-first contract when the complete expanded API is present."
+proof = ".supportability-characterization.json maps both revisions to tests/characterization/exhaustive-pm-audit-contract-v3.characterization.py and its stable compatibility result; focused unit tests prove each expanded failure path."
+
+[separation_of_concerns]
+before = "The skill applied broad Standard sections without a canonical clause ledger, while the validator protected only the earlier package contract."
+after = "The inventory remains a byte-preserved reference, audit instructions own clause disposition and reporting, and the existing validator owns deterministic package-contract checks."
+
+[architecture]
+dependency_direction = "The regression suite invokes the repository validator; the validator uses only the Python standard library and repository files."
+reviewed_paths = [
+    "src/supportability_audit/__init__.py",
+    "src/supportability_audit/validate_repository.py",
+    "tests/test_validate_repository.py",
+]
+
+[responsibility_boundary]
+path = "src/supportability_audit/validate_repository.py"
+owns = "Deterministic validation of the Supportability Audit repository package."
+does_not_own = "Audit execution, target remediation, generated-report certification, GitHub protection, or Supportability Gate implementation."
+
+[incremental_refactor]
+target = "Close canonical clause-coverage and PM-report contract gaps without creating another audit engine or package."
+completed_step = "Extended the existing validator and replaced v2 with one cross-revision-compatible v3 contract scenario."
+
+[review_handoff]
+summary = "Review the byte-identical inventory, exhaustive four-state instructions, PM-first template, focused validator guards, v3 characterization, and this disposable S01 qualification marker."
+remaining_risks = ["Repository validation proves the shipped skill contract, not the correctness of any individual generated audit report."]
+
+[human_review]
+naming = "Clause inventory, checklist, PM findings, and package-validation responsibilities are explicit."
+cohesion = "References own immutable authority/index data; skill files own audit procedure/reporting; the existing source module owns deterministic package validation."
+intended_behavior = "The audit remains read-only, vendor-neutral, advisory, and fail-closed when applicable proof is missing."
+reviewability = "The change extends one existing validator, adds one canonical reference, and replaces one characterization scenario."
+
+[[module_boundaries]]
+path = "src/supportability_audit/__init__.py"
+owner_path = "src/supportability_audit/validate_repository.py"
+basis = "responsibility"
+justification = "The package marker belongs to the repository-validation boundary owned by the validator module."
+
+[[module_boundaries]]
+path = "src/supportability_audit/validate_repository.py"
+owner_path = "src/supportability_audit/validate_repository.py"
+basis = "responsibility"
+justification = "The validator module owns deterministic repository-package validation."

@@ -8,6 +8,9 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import unquote
 
+import supportability_audit
+
+PACKAGE_NAME = supportability_audit.__name__
 ROOT = Path(__file__).resolve().parents[2]
 STANDARD = ROOT / "references" / "supportability-standard.md"
 INVENTORY = ROOT / "references" / "normative_clause_inventory.json"

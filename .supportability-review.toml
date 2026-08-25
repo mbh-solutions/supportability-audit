@@ -30,7 +30,7 @@ target = "Close canonical clause-coverage and PM-report contract gaps without cr
 completed_step = "Extended the existing validator and replaced v2 with one cross-revision-compatible v3 contract scenario."
 
 [review_handoff]
-summary = "Review the byte-identical inventory, exhaustive four-state instructions, PM-first template, focused validator guards, and v3 characterization."
+summary = "Review only this disposable S02 Python qualification marker; production main remains unchanged."
 remaining_risks = ["Repository validation proves the shipped skill contract, not the correctness of any individual generated audit report."]
 
 [human_review]

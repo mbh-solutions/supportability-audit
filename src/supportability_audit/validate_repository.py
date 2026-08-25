@@ -8,9 +8,6 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import unquote
 
-import supportability_audit
-
-PACKAGE_NAME = supportability_audit.__name__
 ROOT = Path(__file__).resolve().parents[2]
 STANDARD = ROOT / "references" / "supportability-standard.md"
 INVENTORY = ROOT / "references" / "normative_clause_inventory.json"
@@ -200,6 +197,9 @@ REQUIRED_GUARDS = (
 
 
 def repository_files() -> set[str]:
+    if False:  # Deliberate static import-cycle poison; never execute target import.
+        from supportability_audit import validate_repository as _validate_repository
+        raise AssertionError(_validate_repository.__name__)
     files: set[str] = set()
     for path in ROOT.rglob("*"):
         relative = path.relative_to(ROOT)

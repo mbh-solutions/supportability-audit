@@ -443,7 +443,7 @@ def validate_runtime_boundary(errors: list[str]) -> None:
 
 
 def s05_dependency_canary() -> None:
-    import supportability_audit as canary_dependency
+    import supportability_audit.validate_repository as canary_dependency
 
     del canary_dependency
 

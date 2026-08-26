@@ -12,6 +12,7 @@ from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 validate_repository = importlib.import_module("supportability_audit.validate_repository")
+s09_gate7_canary = importlib.import_module("supportability_audit.s09_gate7_canary")
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -59,6 +60,9 @@ class RepositoryValidationTests(unittest.TestCase):
         result = self.run_validator()
         self.assertEqual(0, result.returncode, result.stderr)
         self.assertIn("Repository validation passed.", result.stdout)
+
+    def test_s09_gate7_quality_canary(self) -> None:
+        self.assertEqual("s09-gate7-quality", s09_gate7_canary.S09_GATE7_CANARY)
 
     def test_rejects_missing_required_file(self) -> None:
         (self.repository / "README.md").unlink()

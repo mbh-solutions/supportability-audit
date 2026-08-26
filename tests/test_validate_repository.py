@@ -17,6 +17,11 @@ s09_gate7_canary = importlib.import_module("supportability_audit.s09_gate7_canar
 ROOT = Path(__file__).resolve().parents[1]
 
 
+class QualityCanaryTests(unittest.TestCase):
+    def test_s09_gate7_quality_canary(self) -> None:
+        self.assertEqual("s09-gate7-quality", s09_gate7_canary.S09_GATE7_CANARY)
+
+
 class RepositoryValidationTests(unittest.TestCase):
     def setUp(self) -> None:
         self.temporary_directory = tempfile.TemporaryDirectory()
@@ -60,9 +65,6 @@ class RepositoryValidationTests(unittest.TestCase):
         result = self.run_validator()
         self.assertEqual(0, result.returncode, result.stderr)
         self.assertIn("Repository validation passed.", result.stdout)
-
-    def test_s09_gate7_quality_canary(self) -> None:
-        self.assertEqual("s09-gate7-quality", s09_gate7_canary.S09_GATE7_CANARY)
 
     def test_rejects_missing_required_file(self) -> None:
         (self.repository / "README.md").unlink()

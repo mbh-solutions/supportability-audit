@@ -1,46 +1,48 @@
 schema_version = "1.0"
 
 [behavior]
-intended_behavior = "Require the canonical 218-clause coverage index and exhaustive PM-first audit contract while rejecting incomplete or altered skill packages."
-proof = "tests/test_validate_repository.py covers the clean package, inventory hash/schema/binding/count/uniqueness, report contract, and prior package failure paths."
+intended_behavior = "The temporary s04_separation_canary function provides one static Python Gate 2 qualification boundary without being called by product code."
+proof = "The function is a two-line identity operation covered by the existing exhaustive-pm-audit-contract-v3 characterization path and exists only on a protected never-merge canary PR."
 
 [characterization]
-captured_behavior = "The v3 driver proves the established package behavior on both revisions and asserts the expanded inventory and PM-first contract when the complete expanded API is present."
-proof = ".supportability-characterization.json maps both revisions to tests/characterization/exhaustive-pm-audit-contract-v3.characterization.py and its stable compatibility result; focused unit tests prove each expanded failure path."
+captured_behavior = "Existing repository-validation behavior remains unchanged because no caller references s04_separation_canary."
+proof = "The existing exhaustive-pm-audit-contract-v3 scenario covers src/supportability_audit/validate_repository.py; hosted characterization and quality evidence must remain compatible on the exact canary head."
 
 [separation_of_concerns]
-before = "The skill applied broad Standard sections without a canonical clause ledger, while the validator protected only the earlier package contract."
-after = "The inventory remains a byte-preserved reference, audit instructions own clause disposition and reporting, and the existing validator owns deterministic package-contract checks."
+before = "Gate 2 Python qualification had no disposable changed function in this target repository."
+after = "One uncalled function owns only the temporary static separation-boundary signal; existing validation responsibilities remain unchanged."
 boundaries = [
     { path = "src/supportability_audit/validate_repository.py", kind = "function", symbol = "s04_separation_canary", before = "No disposable Gate 2 qualification function existed.", after = "s04_separation_canary owns only the static Gate 2 qualification signal." },
 ]
 
 [architecture]
-dependency_direction = "The regression suite invokes the repository validator; the validator uses only the Python standard library and repository files."
+dependency_direction = "The canary adds no imports, calls, packages, runtime dependencies, or dependency-direction changes."
 reviewed_paths = [
-    "src/supportability_audit/__init__.py",
+    ".supportability-review.toml",
     "src/supportability_audit/validate_repository.py",
-    "tests/test_validate_repository.py",
 ]
 
 [responsibility_boundary]
 path = "src/supportability_audit/validate_repository.py"
-owns = "Deterministic validation of the Supportability Audit repository package."
-does_not_own = "Audit execution, target remediation, generated-report certification, GitHub protection, or Supportability Gate implementation."
+owns = "The disposable s04_separation_canary function used for static Gate 2 qualification on this never-merge PR."
+does_not_own = "Repository validation, Gate implementation, thresholds, dependencies, or permanent product capability."
 
 [incremental_refactor]
-target = "Close canonical clause-coverage and PM-report contract gaps without creating another audit engine or package."
-completed_step = "Extended the existing validator and replaced v2 with one cross-revision-compatible v3 contract scenario."
+target = "Qualify exact Python separation-boundary binding on a disposable protected target branch."
+completed_step = "Add one bounded uncalled function and bind one exact before/after responsibility row."
 
 [review_handoff]
-summary = "Review the byte-identical inventory, exhaustive four-state instructions, PM-first template, focused validator guards, and v3 characterization."
-remaining_risks = ["Repository validation proves the shipped skill contract, not the correctness of any individual generated audit report."]
+summary = "Review only the disposable s04_separation_canary and its evidence metadata: the valid head binds one exact Python function boundary, has no caller or product behavior change, and changes no threshold, dependency, exclusion, or waiver."
+remaining_risks = [
+    "This artificial function proves static boundary association only; it is not product functionality.",
+    "The canary PR must remain unmerged and all disposable refs and protection must be deleted after evidence capture.",
+]
 
 [human_review]
-naming = "Clause inventory, checklist, PM findings, and package-validation responsibilities are explicit."
-cohesion = "References own immutable authority/index data; skill files own audit procedure/reporting; the existing source module owns deterministic package validation."
-intended_behavior = "The audit remains read-only, vendor-neutral, advisory, and fail-closed when applicable proof is missing."
-reviewability = "The change extends one existing validator, adds one canonical reference, and replaces one characterization scenario."
+naming = "s04_separation_canary identifies the exact slice and qualification purpose."
+cohesion = "One function contains the complete temporary Gate 2 signal; no existing validator responsibility changes."
+intended_behavior = "Gate 2 passes the exact bound identity and blocks a later deceptive unbound claim while other lanes remain isolated."
+reviewability = "The production diff is one uncalled two-line function plus its exact evidence metadata."
 
 [[module_boundaries]]
 path = "src/supportability_audit/__init__.py"

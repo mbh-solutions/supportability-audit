@@ -35,7 +35,7 @@ target = "Close canonical clause-coverage and PM-report contract gaps without cr
 completed_step = "Extended the existing validator and replaced v2 with one cross-revision-compatible v3 contract scenario."
 
 [review_handoff]
-summary = "Review the byte-identical inventory, exhaustive four-state instructions, PM-first template, focused validator guards, and v3 characterization."
+summary = "S08 H2 is a disposable never-merge Gate 6 poison: code and characterization remain valid while exact owner authorization deliberately alters one target span; Gate 6 alone must block."
 remaining_risks = ["Repository validation proves the shipped skill contract, not the correctness of any individual generated audit report."]
 
 [human_review]

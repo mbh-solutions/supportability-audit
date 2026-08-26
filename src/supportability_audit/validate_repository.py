@@ -442,6 +442,10 @@ def validate_runtime_boundary(errors: list[str]) -> None:
         errors.append("plugin or client metadata is prohibited")
 
 
+def s04_separation_canary(value: int) -> int:
+    return value
+
+
 def main() -> int:
     errors: list[str] = []
     validate_files(errors)

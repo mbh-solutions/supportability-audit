@@ -12,6 +12,7 @@ from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 validate_repository = importlib.import_module("supportability_audit.validate_repository")
+s06_component = importlib.import_module("supportability_audit.s06_component")
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -59,6 +60,9 @@ class RepositoryValidationTests(unittest.TestCase):
         result = self.run_validator()
         self.assertEqual(0, result.returncode, result.stderr)
         self.assertIn("Repository validation passed.", result.stdout)
+
+    def test_s06_component_contract(self) -> None:
+        self.assertEqual("s06", s06_component.S06_COMPONENT)
 
     def test_rejects_missing_required_file(self) -> None:
         (self.repository / "README.md").unlink()

@@ -13,6 +13,7 @@ before = "The skill applied broad Standard sections without a canonical clause l
 after = "The inventory remains a byte-preserved reference, audit instructions own clause disposition and reporting, and the existing validator owns deterministic package-contract checks."
 boundaries = [
     { path = "src/supportability_audit/s07_characterized.py", kind = "module", symbol = "src/supportability_audit/s07_characterized.py", before = "The disposable S07 characterized contract was absent.", after = "The disposable module owns only one type alias and one constant." },
+    { path = "src/supportability_audit/s07_uncharacterized.py", kind = "module", symbol = "src/supportability_audit/s07_uncharacterized.py", before = "The disposable S07 uncharacterized contract was absent.", after = "The disposable module owns only one type alias and one constant." },
     { path = "src/supportability_audit/validate_repository.py", kind = "module", symbol = "src/supportability_audit/validate_repository.py", before = "The exact repository inventory omitted the disposable S07 canary files.", after = "The exact repository inventory admits only the bounded S07 canary files." },
 ]
 
@@ -21,6 +22,7 @@ dependency_direction = "The regression suite invokes the repository validator; t
 reviewed_paths = [
     "src/supportability_audit/__init__.py",
     "src/supportability_audit/s07_characterized.py",
+    "src/supportability_audit/s07_uncharacterized.py",
     "src/supportability_audit/validate_repository.py",
     "tests/test_validate_repository.py",
 ]
@@ -61,3 +63,9 @@ path = "src/supportability_audit/s07_characterized.py"
 owner_path = "src/supportability_audit/s07_characterized.py"
 basis = "responsibility"
 justification = "The disposable module owns only its S07 characterized canary type alias and constant."
+
+[[module_boundaries]]
+path = "src/supportability_audit/s07_uncharacterized.py"
+owner_path = "src/supportability_audit/s07_uncharacterized.py"
+basis = "responsibility"
+justification = "The disposable module owns only its S07 uncharacterized canary type alias and constant."

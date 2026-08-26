@@ -37,6 +37,7 @@ REQUIRED_FILES = {
     "references/supportability-standard.md",
     "src/supportability_audit/__init__.py",
     "src/supportability_audit/s07_characterized.py",
+    "src/supportability_audit/s07_uncharacterized.py",
     "src/supportability_audit/validate_repository.py",
     "tests/characterization/exhaustive-pm-audit-contract-v3.characterization.py",
     "tests/characterization/exhaustive-pm-audit-contract-v3.golden.json",

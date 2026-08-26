@@ -13,6 +13,7 @@ from unittest import mock
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 validate_repository = importlib.import_module("supportability_audit.validate_repository")
 s07_characterized = importlib.import_module("supportability_audit.s07_characterized")
+s07_uncharacterized = importlib.import_module("supportability_audit.s07_uncharacterized")
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -63,6 +64,9 @@ class RepositoryValidationTests(unittest.TestCase):
 
     def test_s07_characterized_contract(self) -> None:
         self.assertEqual("s07-characterized", s07_characterized.S07_CHARACTERIZED)
+
+    def test_s07_uncharacterized_contract(self) -> None:
+        self.assertEqual("s07-uncharacterized", s07_uncharacterized.S07_UNCHARACTERIZED)
 
     def test_rejects_missing_required_file(self) -> None:
         (self.repository / "README.md").unlink()

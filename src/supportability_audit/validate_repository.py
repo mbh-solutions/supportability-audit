@@ -36,9 +36,12 @@ REQUIRED_FILES = {
     "references/normative_clause_inventory.json",
     "references/supportability-standard.md",
     "src/supportability_audit/__init__.py",
+    "src/supportability_audit/s08_refactor.py",
     "src/supportability_audit/validate_repository.py",
     "tests/characterization/exhaustive-pm-audit-contract-v3.characterization.py",
     "tests/characterization/exhaustive-pm-audit-contract-v3.golden.json",
+    "tests/characterization/s08-refactor-contract.characterization.py",
+    "tests/characterization/s08-refactor-contract.golden.json",
     "tests/test_validate_repository.py",
 }
 RUNTIME_FILES = {

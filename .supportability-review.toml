@@ -11,11 +11,16 @@ proof = ".supportability-characterization.json maps both revisions to tests/char
 [separation_of_concerns]
 before = "The skill applied broad Standard sections without a canonical clause ledger, while the validator protected only the earlier package contract."
 after = "The inventory remains a byte-preserved reference, audit instructions own clause disposition and reporting, and the existing validator owns deterministic package-contract checks."
+boundaries = [
+    { path = "src/supportability_audit/s06_component.py", kind = "module", symbol = "src/supportability_audit/s06_component.py", before = "The disposable S06 component contract was absent.", after = "The disposable module owns only one type alias and one constant." },
+    { path = "src/supportability_audit/validate_repository.py", kind = "module", symbol = "src/supportability_audit/validate_repository.py", before = "The exact repository inventory omitted the disposable S06 canary files.", after = "The exact repository inventory admits only the bounded S06 canary files." },
+]
 
 [architecture]
 dependency_direction = "The regression suite invokes the repository validator; the validator uses only the Python standard library and repository files."
 reviewed_paths = [
     "src/supportability_audit/__init__.py",
+    "src/supportability_audit/s06_component.py",
     "src/supportability_audit/validate_repository.py",
     "tests/test_validate_repository.py",
 ]
@@ -50,3 +55,9 @@ path = "src/supportability_audit/validate_repository.py"
 owner_path = "src/supportability_audit/validate_repository.py"
 basis = "responsibility"
 justification = "The validator module owns deterministic repository-package validation."
+
+[[module_boundaries]]
+path = "src/supportability_audit/s06_component.py"
+owner_path = "src/supportability_audit/s06_component.py"
+basis = "responsibility"
+justification = "The disposable module owns only its S06 canary type alias and constant."

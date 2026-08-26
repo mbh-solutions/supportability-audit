@@ -58,6 +58,6 @@ justification = "The validator module owns deterministic repository-package vali
 
 [[module_boundaries]]
 path = "src/supportability_audit/s06_component.py"
-owner_path = "src/supportability_audit/s06_component.py"
+owner_path = "src/supportability_audit/components.py"
 basis = "responsibility"
 justification = "The disposable module owns only its S06 canary type alias and constant."

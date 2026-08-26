@@ -11,6 +11,9 @@ proof = ".supportability-characterization.json maps both revisions to tests/char
 [separation_of_concerns]
 before = "The skill applied broad Standard sections without a canonical clause ledger, while the validator protected only the earlier package contract."
 after = "The inventory remains a byte-preserved reference, audit instructions own clause disposition and reporting, and the existing validator owns deterministic package-contract checks."
+boundaries = [
+    { path = "src/supportability_audit/validate_repository.py", kind = "function", symbol = "s05_dependency_canary", before = "No S05 dependency-direction canary function existed.", after = "One disposable function records a valid internal package dependency." },
+]
 
 [architecture]
 dependency_direction = "The regression suite invokes the repository validator; the validator uses only the Python standard library and repository files."

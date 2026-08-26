@@ -12,7 +12,7 @@ proof = "The existing exhaustive-pm-audit-contract-v3 scenario covers src/suppor
 before = "Gate 2 Python qualification had no disposable changed function in this target repository."
 after = "One uncalled function owns only the temporary static separation-boundary signal; existing validation responsibilities remain unchanged."
 boundaries = [
-    { path = "src/supportability_audit/validate_repository.py", kind = "function", symbol = "s04_separation_canary", before = "No disposable Gate 2 qualification function existed.", after = "s04_separation_canary owns only the static Gate 2 qualification signal." },
+    { path = "src/supportability_audit/validate_repository.py", kind = "function", symbol = "s04_separation_canary_claimed", before = "No disposable Gate 2 qualification function existed.", after = "s04_separation_canary owns only the static Gate 2 qualification signal." },
 ]
 
 [architecture]

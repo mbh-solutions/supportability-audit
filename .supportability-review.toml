@@ -11,11 +11,16 @@ proof = ".supportability-characterization.json maps both revisions to tests/char
 [separation_of_concerns]
 before = "The skill applied broad Standard sections without a canonical clause ledger, while the validator protected only the earlier package contract."
 after = "The inventory remains a byte-preserved reference, audit instructions own clause disposition and reporting, and the existing validator owns deterministic package-contract checks."
+boundaries = [
+    { path = "src/supportability_audit/s09_gate7_canary.py", kind = "module", symbol = "src/supportability_audit/s09_gate7_canary.py", before = "No disposable Python quality canary existed.", after = "The disposable module owns one runtime constant exercised by one direct test." },
+    { path = "src/supportability_audit/validate_repository.py", kind = "module", symbol = "src/supportability_audit/validate_repository.py", before = "The exact package inventory omitted the disposable S09 files.", after = "The exact package inventory admits only the bounded S09 canary files." },
+]
 
 [architecture]
 dependency_direction = "The regression suite invokes the repository validator; the validator uses only the Python standard library and repository files."
 reviewed_paths = [
     "src/supportability_audit/__init__.py",
+    "src/supportability_audit/s09_gate7_canary.py",
     "src/supportability_audit/validate_repository.py",
     "tests/test_validate_repository.py",
 ]
@@ -30,8 +35,8 @@ target = "Close canonical clause-coverage and PM-report contract gaps without cr
 completed_step = "Extended the existing validator and replaced v2 with one cross-revision-compatible v3 contract scenario."
 
 [review_handoff]
-summary = "Review the byte-identical inventory, exhaustive four-state instructions, PM-first template, focused validator guards, and v3 characterization."
-remaining_risks = ["Repository validation proves the shipped skill contract, not the correctness of any individual generated audit report."]
+summary = "Review the disposable S09 Python quality canary and its direct evidence: the change adds one importable runtime constant, covered by one isolated direct test and one characterization scenario that imports the owned value; the exact package inventory admits only those bounded files; no dependency, threshold, exclusion, waiver, or existing product behavior changes."
+remaining_risks = ["This temporary protected-base canary is intended to validate hosted Gate 7 mechanics and is removed after its normal merge evidence is captured."]
 
 [human_review]
 naming = "Clause inventory, checklist, PM findings, and package-validation responsibilities are explicit."
@@ -50,3 +55,9 @@ path = "src/supportability_audit/validate_repository.py"
 owner_path = "src/supportability_audit/validate_repository.py"
 basis = "responsibility"
 justification = "The validator module owns deterministic repository-package validation."
+
+[[module_boundaries]]
+path = "src/supportability_audit/s09_gate7_canary.py"
+owner_path = "src/supportability_audit/s09_gate7_canary.py"
+basis = "responsibility"
+justification = "The disposable module owns one S09 Gate 7 canary constant."

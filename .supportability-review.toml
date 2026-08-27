@@ -11,7 +11,10 @@ proof = ".supportability-characterization.json maps both revisions to tests/char
 [separation_of_concerns]
 before = "The skill applied broad Standard sections without a canonical clause ledger, while the validator protected only the earlier package contract."
 after = "The inventory remains a byte-preserved reference, audit instructions own clause disposition and reporting, and the existing validator owns deterministic package-contract checks."
-boundaries = []
+boundaries = [
+    { path = "src/supportability_audit/s09_gate7_canary.py", kind = "module", symbol = "src/supportability_audit/s09_gate7_canary.py", before = "No disposable Python quality canary existed.", after = "The disposable module owns one runtime constant exercised by one direct test." },
+    { path = "src/supportability_audit/validate_repository.py", kind = "module", symbol = "src/supportability_audit/validate_repository.py", before = "The exact package inventory omitted the disposable S09 files.", after = "The exact package inventory admits only the bounded S09 canary files." },
+]
 
 [architecture]
 dependency_direction = "The regression suite invokes the repository validator; the validator uses only the Python standard library and repository files."

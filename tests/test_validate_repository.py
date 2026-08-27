@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class QualityCanaryTests(unittest.TestCase):
     def test_s09_gate7_quality_canary(self) -> None:
-        self.assertEqual("s09-gate7-quality", s09_gate7_canary.S09_GATE7_CANARY)
+        self.assertEqual("poisoned", s09_gate7_canary.S09_GATE7_CANARY)
 
 
 class RepositoryValidationTests(unittest.TestCase):

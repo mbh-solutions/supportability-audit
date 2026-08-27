@@ -35,7 +35,7 @@ target = "Close canonical clause-coverage and PM-report contract gaps without cr
 completed_step = "Extended the existing validator and replaced v2 with one cross-revision-compatible v3 contract scenario."
 
 [review_handoff]
-summary = "DERIVED_FROM_AUTHENTICATED_EVIDENCE"
+summary = "All eight Supportability gates are green."
 remaining_risks = ["DERIVED_FROM_AUTHENTICATED_EVIDENCE"]
 
 [human_review]

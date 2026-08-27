@@ -8,6 +8,13 @@
         "src/supportability_audit/__init__.py",
         "src/supportability_audit/validate_repository.py"
       ]
+    },
+    {
+      "id": "s09-gate7-quality",
+      "kind": "regression",
+      "covers": [
+        "src/supportability_audit/s09_gate7_canary.py"
+      ]
     }
   ]
 }

@@ -1,23 +1,23 @@
 schema_version = "1.0"
 
 [behavior]
-intended_behavior = "Require the canonical 218-clause coverage index and exhaustive PM-first audit contract while rejecting incomplete or altered skill packages."
-proof = "tests/test_validate_repository.py covers the clean package, inventory hash/schema/binding/count/uniqueness, report contract, and prior package failure paths."
+intended_behavior = "Exercise one disposable Python production-path canary through protected Supportability Gate qualification without changing the Supportability Audit runtime behavior."
+proof = "tests/test_validate_repository.py directly checks the canary constant, its cross-revision definition fallback, and the repository's exact package inventory."
 
 [characterization]
-captured_behavior = "The v3 driver proves the established package behavior on both revisions and asserts the expanded inventory and PM-first contract when the complete expanded API is present."
-proof = ".supportability-characterization.json maps both revisions to tests/characterization/exhaustive-pm-audit-contract-v3.characterization.py and its stable compatibility result; focused unit tests prove each expanded failure path."
+captured_behavior = "The S09 Gate 7 driver runs against both revisions, reads the head definition when the new module is absent from the base target, and imports the module from the head target."
+proof = ".supportability-characterization.json binds tests/characterization/s09-gate7-quality.characterization.py to one stable golden result; tests/test_validate_repository.py proves the named definition assignment is selected."
 
 [separation_of_concerns]
-before = "The skill applied broad Standard sections without a canonical clause ledger, while the validator protected only the earlier package contract."
-after = "The inventory remains a byte-preserved reference, audit instructions own clause disposition and reporting, and the existing validator owns deterministic package-contract checks."
+before = "The package had no disposable Python production-path canary for this qualification path."
+after = "One isolated module owns the canary value, while the existing validator and tests retain package-validation and proof responsibilities."
 boundaries = [
     { path = "src/supportability_audit/s09_gate7_canary.py", kind = "module", symbol = "src/supportability_audit/s09_gate7_canary.py", before = "No disposable Python quality canary existed.", after = "The disposable module owns one runtime constant exercised by one direct test." },
     { path = "src/supportability_audit/validate_repository.py", kind = "module", symbol = "src/supportability_audit/validate_repository.py", before = "The exact package inventory omitted the disposable S09 files.", after = "The exact package inventory admits only the bounded S09 canary files." },
 ]
 
 [architecture]
-dependency_direction = "The regression suite invokes the repository validator; the validator uses only the Python standard library and repository files."
+dependency_direction = "The canary module has no dependencies; the direct test imports it, the cross-revision driver reads or imports it, and the validator admits only the exact canary files."
 reviewed_paths = [
     "src/supportability_audit/__init__.py",
     "src/supportability_audit/s09_gate7_canary.py",
@@ -31,18 +31,18 @@ owns = "Deterministic validation of the Supportability Audit repository package.
 does_not_own = "Audit execution, target remediation, generated-report certification, GitHub protection, or Supportability Gate implementation."
 
 [incremental_refactor]
-target = "Close canonical clause-coverage and PM-report contract gaps without creating another audit engine or package."
-completed_step = "Extended the existing validator and replaced v2 with one cross-revision-compatible v3 contract scenario."
+target = "Qualify one bounded disposable Python canary without changing the production main branch or the audit runtime contract."
+completed_step = "Added one source constant, admitted only its exact files to the package inventory, and characterized the same value across base and head revisions."
 
 [review_handoff]
 summary = "DERIVED_FROM_AUTHENTICATED_EVIDENCE"
 remaining_risks = ["DERIVED_FROM_AUTHENTICATED_EVIDENCE"]
 
 [human_review]
-naming = "Clause inventory, checklist, PM findings, and package-validation responsibilities are explicit."
-cohesion = "References own immutable authority/index data; skill files own audit procedure/reporting; the existing source module owns deterministic package validation."
-intended_behavior = "The audit remains read-only, vendor-neutral, advisory, and fail-closed when applicable proof is missing."
-reviewability = "The change extends one existing validator, adds one canonical reference, and replaces one characterization scenario."
+naming = "The disposable module, constant, test, and characterization scenario all use the S09 Gate 7 canary name."
+cohesion = "The source module owns one canary value; the validator owns its exact package admission; the test and characterization files own direct and cross-revision proof."
+intended_behavior = "The canary exists only to exercise protected qualification and does not alter Supportability Audit behavior."
+reviewability = "The bounded change is one source constant plus its exact package admission, direct test, and cross-revision characterization."
 
 [[module_boundaries]]
 path = "src/supportability_audit/__init__.py"

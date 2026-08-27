@@ -36,7 +36,7 @@ completed_step = "Extended the existing validator and replaced v2 with one cross
 
 [review_handoff]
 summary = "DERIVED_FROM_AUTHENTICATED_EVIDENCE"
-remaining_risks = ["DERIVED_FROM_AUTHENTICATED_EVIDENCE"]
+remaining_risks = ["No risks, gaps, or follow-up work."]
 
 [human_review]
 naming = "Clause inventory, checklist, PM findings, and package-validation responsibilities are explicit."

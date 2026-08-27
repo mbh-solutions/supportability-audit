@@ -30,7 +30,10 @@ class QualityCanaryTests(unittest.TestCase):
             target.mkdir()
             module = definition / "src" / "supportability_audit" / "s09_gate7_canary.py"
             module.parent.mkdir(parents=True)
-            module.write_text('S09_GATE7_CANARY = "definition-value"\n', encoding="utf-8")
+            module.write_text(
+                'UNRELATED = "wrong"\nS09_GATE7_CANARY: str = "definition-value"\n',
+                encoding="utf-8",
+            )
             result = subprocess.run(
                 [
                     sys.executable,

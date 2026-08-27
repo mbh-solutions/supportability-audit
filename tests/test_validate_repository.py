@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -20,6 +21,40 @@ ROOT = Path(__file__).resolve().parents[1]
 class QualityCanaryTests(unittest.TestCase):
     def test_s09_gate7_quality_canary(self) -> None:
         self.assertEqual("s09-gate7-quality", s09_gate7_canary.S09_GATE7_CANARY)
+
+    def test_characterization_reads_definition_revision_value(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            target = root / "target"
+            definition = root / "definition"
+            target.mkdir()
+            module = definition / "src" / "supportability_audit" / "s09_gate7_canary.py"
+            module.parent.mkdir(parents=True)
+            module.write_text('S09_GATE7_CANARY = "definition-value"\n', encoding="utf-8")
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(
+                        ROOT
+                        / "tests"
+                        / "characterization"
+                        / "s09-gate7-quality.characterization.py"
+                    ),
+                ],
+                capture_output=True,
+                check=False,
+                env={
+                    **os.environ,
+                    "SUPPORTABILITY_CHARACTERIZATION_DEFINITION": str(definition),
+                    "SUPPORTABILITY_CHARACTERIZATION_TARGET": str(target),
+                },
+                text=True,
+            )
+
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertEqual(
+            "definition-value", json.loads(result.stdout)["behavior"]["quality_canary"]
+        )
 
 
 class RepositoryValidationTests(unittest.TestCase):

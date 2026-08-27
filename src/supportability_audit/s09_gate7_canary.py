@@ -23,10 +23,6 @@ def legacy_gap(value: int) -> int:
         score += 1
     if value > 10:
         score += 1
-    if value > 11:
-        score += 1
-    if value > 12:
-        score += 1
     return score
 
 

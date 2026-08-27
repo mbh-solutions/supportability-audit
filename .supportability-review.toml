@@ -9,11 +9,10 @@ captured_behavior = "The v3 driver proves the established package behavior on bo
 proof = ".supportability-characterization.json maps both revisions to tests/characterization/exhaustive-pm-audit-contract-v3.characterization.py and its stable compatibility result; focused unit tests prove each expanded failure path."
 
 [separation_of_concerns]
-before = "The skill applied broad Standard sections without a canonical clause ledger, while the validator protected only the earlier package contract."
-after = "The inventory remains a byte-preserved reference, audit instructions own clause disposition and reporting, and the existing validator owns deterministic package-contract checks."
+before = "The disposable canary retained complexity 14 as explicitly bounded legacy debt."
+after = "The same canary reduces that legacy complexity to 12 without adding a new responsibility."
 boundaries = [
-    { path = "src/supportability_audit/s09_gate7_canary.py", kind = "module", symbol = "src/supportability_audit/s09_gate7_canary.py", before = "No disposable Python quality canary existed.", after = "The disposable module owns one runtime constant exercised by one direct test." },
-    { path = "src/supportability_audit/validate_repository.py", kind = "module", symbol = "src/supportability_audit/validate_repository.py", before = "The exact package inventory omitted the disposable S09 files.", after = "The exact package inventory admits only the bounded S09 canary files." },
+    { path = "src/supportability_audit/s09_gate7_canary.py", kind = "function", symbol = "legacy_gap", before = "The function had complexity 14.", after = "The function has complexity 12." },
 ]
 
 [architecture]
@@ -26,13 +25,13 @@ reviewed_paths = [
 ]
 
 [responsibility_boundary]
-path = "src/supportability_audit/validate_repository.py"
-owns = "Deterministic validation of the Supportability Audit repository package."
-does_not_own = "Audit execution, target remediation, generated-report certification, GitHub protection, or Supportability Gate implementation."
+path = "src/supportability_audit/s09_gate7_canary.py"
+owns = "One disposable progressive-complexity qualification function and its stable canary constant."
+does_not_own = "Audit execution, repository validation, production behavior, or Supportability Gate implementation."
 
 [incremental_refactor]
-target = "Close canonical clause-coverage and PM-report contract gaps without creating another audit engine or package."
-completed_step = "Extended the existing validator and replaced v2 with one cross-revision-compatible v3 contract scenario."
+target = "Reduce the isolated legacy qualification function toward the fixed complexity maximum."
+completed_step = "Reduced the same function from complexity 14 to 12 in one bounded step."
 
 [review_handoff]
 summary = "DERIVED_FROM_AUTHENTICATED_EVIDENCE"

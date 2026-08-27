@@ -42,7 +42,7 @@ remaining_risks = ["DERIVED_FROM_AUTHENTICATED_EVIDENCE"]
 naming = "Clause inventory, checklist, PM findings, and package-validation responsibilities are explicit."
 cohesion = "References own immutable authority/index data; skill files own audit procedure/reporting; the existing source module owns deterministic package validation."
 intended_behavior = "The audit remains read-only, vendor-neutral, advisory, and fail-closed when applicable proof is missing."
-reviewability = "The change extends one existing validator, adds one canonical reference, and replaces one characterization scenario; this exact review blob uniquely identifies S10 poison case 10."
+reviewability = "The change extends one existing validator, adds one canonical reference, and replaces one characterization scenario; this exact review blob uniquely identifies S10 poison case 10 authorized retry."
 
 [[module_boundaries]]
 path = "src/supportability_audit/__init__.py"

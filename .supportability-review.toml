@@ -1,11 +1,11 @@
 schema_version = "1.0"
 
 [behavior]
-intended_behavior = "Exercise one disposable Python production-path canary through protected Supportability Gate qualification without changing the Supportability Audit runtime behavior."
+intended_behavior = "Exercise one fresh disposable Python production-path canary through protected S11 integrated qualification without changing the Supportability Audit runtime behavior."
 proof = "tests/test_validate_repository.py directly checks the canary constant, its cross-revision definition fallback, and the repository's exact package inventory."
 
 [characterization]
-captured_behavior = "The S09 Gate 7 driver runs against both revisions, reads the head definition when the new module is absent from the base target, and imports the module from the head target."
+captured_behavior = "The proven Python canary driver runs against both fresh S11 revisions, reads the head definition when the new module is absent from the base target, and imports the module from the head target."
 proof = ".supportability-characterization.json binds tests/characterization/s09-gate7-quality.characterization.py to one stable golden result; tests/test_validate_repository.py proves the named definition assignment is selected."
 
 [separation_of_concerns]
@@ -13,7 +13,7 @@ before = "The package had no disposable Python production-path canary for this q
 after = "One isolated module owns the canary value, while the existing validator and tests retain package-validation and proof responsibilities."
 boundaries = [
     { path = "src/supportability_audit/s09_gate7_canary.py", kind = "module", symbol = "src/supportability_audit/s09_gate7_canary.py", before = "No disposable Python quality canary existed.", after = "The disposable module owns one runtime constant exercised by one direct test." },
-    { path = "src/supportability_audit/validate_repository.py", kind = "module", symbol = "src/supportability_audit/validate_repository.py", before = "The exact package inventory omitted the disposable S09 files.", after = "The exact package inventory admits only the bounded S09 canary files." },
+    { path = "src/supportability_audit/validate_repository.py", kind = "module", symbol = "src/supportability_audit/validate_repository.py", before = "The exact package inventory omitted the disposable canary files.", after = "The exact package inventory admits only the bounded canary files." },
 ]
 
 [architecture]
@@ -39,7 +39,7 @@ summary = "DERIVED_FROM_AUTHENTICATED_EVIDENCE"
 remaining_risks = ["DERIVED_FROM_AUTHENTICATED_EVIDENCE"]
 
 [human_review]
-naming = "The disposable module, constant, test, and characterization scenario all use the S09 Gate 7 canary name."
+naming = "The historical S09 name identifies the reused proven fixture; this is a fresh S11 PR-scoped lifecycle."
 cohesion = "The source module owns one canary value; the validator owns its exact package admission; the test and characterization files own direct and cross-revision proof."
 intended_behavior = "The canary exists only to exercise protected qualification and does not alter Supportability Audit behavior."
 reviewability = "The bounded change is one source constant plus its exact package admission, direct test, and cross-revision characterization."
@@ -60,4 +60,4 @@ justification = "The validator module owns deterministic repository-package vali
 path = "src/supportability_audit/s09_gate7_canary.py"
 owner_path = "src/supportability_audit/s09_gate7_canary.py"
 basis = "responsibility"
-justification = "The disposable module owns one S09 Gate 7 canary constant."
+justification = "The disposable module owns one reused canary constant for fresh S11 qualification."

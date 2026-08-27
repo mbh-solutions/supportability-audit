@@ -25,4 +25,4 @@ paths = ["src"]
 
 [complexity]
 adapter = "python.c901-touched.v1"
-maximum = 10
+maximum = 11

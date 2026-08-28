@@ -42,3 +42,5 @@ The absolute path works around an upstream reference-validator defect in which t
 ## Protected delivery
 
 Changes to `main` are protected by the repository validation rule and the organization's centrally managed Supportability Gate. The Gate workflow is maintained outside this repository and pinned by the organization ruleset.
+
+<!-- Disposable ruleset canary; close without merging. -->

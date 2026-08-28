@@ -1,4 +1,5 @@
 schema_version = "1.0"
+module_boundaries = []
 
 [behavior]
 intended_behavior = "Require the canonical 218-clause coverage index and exhaustive PM-first audit contract while rejecting incomplete or altered skill packages."
@@ -11,6 +12,7 @@ proof = ".supportability-characterization.json maps both revisions to tests/char
 [separation_of_concerns]
 before = "The skill applied broad Standard sections without a canonical clause ledger, while the validator protected only the earlier package contract."
 after = "The inventory remains a byte-preserved reference, audit instructions own clause disposition and reporting, and the existing validator owns deterministic package-contract checks."
+boundaries = []
 
 [architecture]
 dependency_direction = "The regression suite invokes the repository validator; the validator uses only the Python standard library and repository files."
@@ -30,23 +32,11 @@ target = "Close canonical clause-coverage and PM-report contract gaps without cr
 completed_step = "Extended the existing validator and replaced v2 with one cross-revision-compatible v3 contract scenario."
 
 [review_handoff]
-summary = "Review the byte-identical inventory, exhaustive four-state instructions, PM-first template, focused validator guards, and v3 characterization."
-remaining_risks = ["Repository validation proves the shipped skill contract, not the correctness of any individual generated audit report."]
+summary = "DERIVED_FROM_AUTHENTICATED_EVIDENCE"
+remaining_risks = ["DERIVED_FROM_AUTHENTICATED_EVIDENCE"]
 
 [human_review]
 naming = "Clause inventory, checklist, PM findings, and package-validation responsibilities are explicit."
 cohesion = "References own immutable authority/index data; skill files own audit procedure/reporting; the existing source module owns deterministic package validation."
 intended_behavior = "The audit remains read-only, vendor-neutral, advisory, and fail-closed when applicable proof is missing."
 reviewability = "The change extends one existing validator, adds one canonical reference, and replaces one characterization scenario."
-
-[[module_boundaries]]
-path = "src/supportability_audit/__init__.py"
-owner_path = "src/supportability_audit/validate_repository.py"
-basis = "responsibility"
-justification = "The package marker belongs to the repository-validation boundary owned by the validator module."
-
-[[module_boundaries]]
-path = "src/supportability_audit/validate_repository.py"
-owner_path = "src/supportability_audit/validate_repository.py"
-basis = "responsibility"
-justification = "The validator module owns deterministic repository-package validation."
